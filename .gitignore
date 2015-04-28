@@ -13,6 +13,7 @@
 *.class
 *.o
 *.so
+*.iml
 bin/
 gen/
 proguard/
