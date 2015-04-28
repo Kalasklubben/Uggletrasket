@@ -47,7 +47,7 @@ public class Question {
     }
 
     public String[] getAlternatives(){
-        return alternatives;
+        return alternatives.clone();
     }
 
     public void removeAllAlternatives(){

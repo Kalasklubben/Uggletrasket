@@ -13,6 +13,9 @@ import android.app.Activity;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 
 import org.apache.http.HttpEntity;
@@ -35,7 +38,7 @@ import android.widget.TextView;
 public class QuestionActivity extends ActionBarActivity{
 
     //Declaring
-    private Button answerA, answerB, answerC, answerD;
+    private Button[] buttonArray = new Button[4];
     private TextView questionView;
     private Question question;
     private int correctButtonID;
@@ -46,13 +49,15 @@ public class QuestionActivity extends ActionBarActivity{
 
         //Alex code
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
-        getData();
+
+        //Get question from LoadQuestion class, using string from strings.xml
+        this.question = LoadQuestion.getData(getResources().getString(R.string.getAllCustomers));
 
         //Connect ID to buttons
-        answerA = (Button) findViewById(R.id.alternativeA);
-        answerB = (Button) findViewById(R.id.alternativeB);
-        answerC = (Button) findViewById(R.id.alternativeC);
-        answerD = (Button) findViewById(R.id.alternativeD);
+        buttonArray[0] = (Button) findViewById(R.id.alternativeA);
+        buttonArray[1] = (Button) findViewById(R.id.alternativeB);
+        buttonArray[2] = (Button) findViewById(R.id.alternativeC);
+        buttonArray[3] = (Button) findViewById(R.id.alternativeD);
         questionView = (TextView) findViewById(R.id.question);
 
         //Listener for buttons
@@ -70,54 +75,40 @@ public class QuestionActivity extends ActionBarActivity{
         };
 
         //Listener on buttons
-        answerA.setOnClickListener(list);
-        answerB.setOnClickListener(list);
-        answerC.setOnClickListener(list);
-        answerD.setOnClickListener(list);
+        for(int i = 0; i < 4; i++)
+            buttonArray[i].setOnClickListener(list);
 
-        //Create test question
-        //createQuestion();
-
-        //Load question
-        loadQuestion();
+        //Display question
+        displayQuestion();
     }
 
-    //Method creating a question, for TEST PURPOSE ONLY
-    private void createQuestion() {
-        question = new Question();
-        question.setQuestion(getResources().getString(R.string.quest1));
-        question.setAnswer(getResources().getString(R.string.correct1));
+    //Method to display question to private instance
+    private void displayQuestion() {
 
-        try {
-            question.addAlternative(getResources().getString(R.string.alt1A));
-            question.addAlternative(getResources().getString(R.string.alt1B));
-            question.addAlternative(getResources().getString(R.string.alt1C));
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //Method to load question to private instance
-    private void loadQuestion() {
-        //this.question = ....
-        //
-        //Also set correctButton to the same ID as the button holding the right answer
-
-        //Static display, MUST be changed
+        //Displaying alternatives random
         questionView.setText(question.getQuestion());
-        answerA.setText(question.getAnswer());
-        correctButtonID = answerA.getId();
+        ArrayList<String> displayArray = new ArrayList<String>();
+
+        displayArray.add(question.getAnswer());
         String[] alts = question.getAlternatives();
-        answerB.setText(alts[0]);
-        answerC.setText(alts[1]);
-        answerD.setText(alts[2]);
+
+        for(int i = 0; i < 3; i++)
+            displayArray.add(alts[i]);
+
+        Collections.shuffle(displayArray);
+
+        for(int i = 0; i < 4 ; i++) {
+            buttonArray[i].setText(displayArray.get(i));
+            if(buttonArray[i].getText() == question.getAnswer())
+                correctButtonID = buttonArray[i].getId();
+        }
 
     }
 
     //Method for showing pop up, for the time being
     private void showMessage(String message){
         AlertDialog alertDialog = new AlertDialog.Builder(QuestionActivity.this).create();
-        alertDialog.setTitle("Uggletrasket!");
+        alertDialog.setTitle(getResources().getString(R.string.app_name));
         alertDialog.setMessage(message);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {
@@ -127,69 +118,6 @@ public class QuestionActivity extends ActionBarActivity{
                 });
         alertDialog.show();
     }
-
-    public void getData(){
-        String result = "";
-        InputStream isr = null;
-        try{
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://www.ilmkandidat.byethost7.com/getAllCustomers.php"); //YOUR PHP SCRIPT ADDRESS
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-            isr = entity.getContent();
-        }
-        catch(Exception e){
-            Log.e("log_tag", "Error in http connection "+e.toString());
-            //resultView.setText("Couldnt connect to database");
-        }
-        //convert response to string
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            isr.close();
-
-            result=sb.toString();
-        }
-        catch(Exception e){
-            Log.e("log_tag", "Error  converting result "+e.toString());
-        }
-
-        //parse json data
-        try {
-            String s = "";
-            JSONArray jArray = new JSONArray(result);
-
-            for(int i=0; i<1 /*jArray.length()*/;i++){
-                JSONObject json = jArray.getJSONObject(i);
-               // s = s +
-                        // "Uppgifter : "+json.getString("ID")+" "+json.getString("Name")+"\n";
-
-               //         "Fråga :  "+json.getString("Name")+"\n" + "Rätt svar :  " +json.getString("Correct") +"\n" + "Fel svar :  " +json.getString("Wrong1") +"\n";
-
-                question = new Question();
-                question.setQuestion(json.getString("Name"));
-                question.setAnswer(json.getString("Correct"));
-
-                try {
-                    question.addAlternative(json.getString("Wrong1"));
-                    question.addAlternative(json.getString("Wrong2"));
-                    question.addAlternative(json.getString("Wrong3"));
-                }catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            //resultView.setText(s);
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            Log.e("log_tag", "Error Parsing Data "+e.toString());
-        }
-
-    }
 }
+
 
