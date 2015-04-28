@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Uggletrasket</string>
-
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="quest1">Vem är Scrum master?</string>
+    <string name="correct1">Johan</string>
+    <string name="alt1A">Professor Löfsten</string>
+    <string name="alt1B">Morgan</string>
+    <string name="alt1C">Jörnmark</string>
+
 </resources>
