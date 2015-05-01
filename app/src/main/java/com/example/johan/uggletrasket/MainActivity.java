@@ -13,7 +13,7 @@ import android.app.Activity;
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next;
+    private Button next, addQuest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,16 +22,28 @@ public class MainActivity extends ActionBarActivity {
 
         //Connect ID to button
         next = (Button) findViewById(R.id.nextButton);
-
+        addQuest= (Button) findViewById(R.id.addQuestButton);
         //Listener for next button
-        View.OnClickListener list = new View.OnClickListener() {
+        View.OnClickListener listNext = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, QuestionActivity.class));
             }
         };
 
-        next.setOnClickListener(list);
+        next.setOnClickListener(listNext);
+
+        View.OnClickListener listAdd = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddQuestion.class));
+            }
+        };
+
+        addQuest.setOnClickListener(listAdd);
+
+
+
     }
 
     @Override
