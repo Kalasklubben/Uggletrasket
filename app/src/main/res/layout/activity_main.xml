@@ -15,10 +15,16 @@
         android:layout_height="wrap_content" />
 
     <Button
-        android:text="Next"
+        android:text="Answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nextButton"/>
+        android:id="@+id/answerButton"/>
+
+    <Button
+        android:text="Create question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/createQuestionButton"/>
 
     </LinearLayout>
 

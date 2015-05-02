@@ -11,5 +11,6 @@
 
     <string name="getAllCustomers">http://www.ilmkandidat.byethost7.com/getAllCustomers.php"</string>
     <string name="errorDatabase">Could not connect to database!"</string>
+    <string name="errorCreateQuestion">One or some fields are empty!</string>
 
 </resources>
