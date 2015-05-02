@@ -9,7 +9,7 @@
     <string name="alt1B">Morgan</string>
     <string name="alt1C">Jörnmark</string>
 
-    <string name="getAllQuestions">"http://www.ilmkandidat.byethost7.com/getAllQuestions.php"</string>
+    <string name="getAllQuestions">http://www.ilmkandidat.byethost7.com/getQuestions.php</string>
     <string name="errorDatabase">Could not connect to database!"</string>
 
     <string name="title_activity_add_question">AddQuestion</string>

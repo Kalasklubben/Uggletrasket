@@ -17,11 +17,11 @@ import java.io.InputStreamReader;
 /**
  * Created by David on 28/04/2015.
  */
-public class LoadQuestion {
+public class LoadQuestions {
 
-    public static Question getData(String script){
+    public static QuestionList getData(String script){
         //Declaring question to return
-        Question loadedQuestion = new Question();
+
 
         String result = "";
         InputStream isr = null;
@@ -51,28 +51,37 @@ public class LoadQuestion {
             Log.e("log_tag", "Error  converting result "+e.toString());
         }
 
+        QuestionList loadedQuestions = new QuestionList();
+
         //parse json data, and convert to question object
         try {
             String s = "";
             JSONArray jArray = new JSONArray(result);
 
-            for(int i=0; i<1 /*jArray.length()*/;i++){
+            for(int i=0; i<jArray.length();i++){
                 JSONObject json = jArray.getJSONObject(i);
-                loadedQuestion.setQuestion(json.getString("Name"));
-                loadedQuestion.setAnswer(json.getString("Correct"));
+
+                Question temp = new Question();
+
+                temp.setQuestion(json.getString("Question"));
+                temp.setAnswer(json.getString("Correct"));
 
                 try {
-                    loadedQuestion.addAlternative(json.getString("Wrong1"));
-                    loadedQuestion.addAlternative(json.getString("Wrong2"));
-                    loadedQuestion.addAlternative(json.getString("Wrong3"));
+                    temp.addAlternative(json.getString("Wrong1"));
+                    temp.addAlternative(json.getString("Wrong2"));
+                    temp.addAlternative(json.getString("Wrong3"));
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                loadedQuestions.addQuestion(temp);
+
             }
         } catch (Exception e) {
             // TODO: handle exception
             Log.e("log_tag", "Error Parsing Data "+e.toString());
         }
-        return loadedQuestion;
+
+        return loadedQuestions;
     }
 }

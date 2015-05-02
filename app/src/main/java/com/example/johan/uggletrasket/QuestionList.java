@@ -8,19 +8,24 @@ import java.util.ArrayList;
 public class QuestionList {
 
     private ArrayList<Question> allQuestions;
-    private int cursor = 0;
+    private int cursor;
     private String ID;
+    private int noQuestions;
 
     public QuestionList(){
-        ID = "ID" + System.currentTimeMillis();
+        ID = "ID" + System.currentTimeMillis( );
+        allQuestions = new ArrayList<>();
+        cursor = 0;
+        noQuestions = 0;
     }
 
     public void addQuestion(Question q){
         allQuestions.add(q);
+        noQuestions++;
     }
 
     public Question getNext(){
-        if(cursor < allQuestions.size()-1)
+        if(cursor < noQuestions)
             cursor++;
         return allQuestions.get(cursor-1);
     }
@@ -34,16 +39,21 @@ public class QuestionList {
     }
 
     public int getSize(){
-        return allQuestions.size();
+        return noQuestions;
     }
 
     public void removeAllQuestion(){
         allQuestions.removeAll(allQuestions);
+        noQuestions = 0;
     }
 
     public void removeQuestion(Question q){
         allQuestions.remove(q);
         if(cursor == getSize())
             cursor--;
+    }
+
+    public boolean endOfList(){
+        return cursor >= noQuestions;
     }
 }

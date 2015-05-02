@@ -1,6 +1,8 @@
 package com.example.johan.uggletrasket;
 
+import android.content.Intent;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,8 +31,8 @@ import java.util.List;
 
 public class AddQuestion extends ActionBarActivity {
 
-    EditText editId, editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
-    Button bSubmit;
+    EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
+    Button bSubmit, bBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,6 @@ public class AddQuestion extends ActionBarActivity {
         StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_add_question);
 
-        editId = (EditText) findViewById(R.id.id);
         editQuestion = (EditText) findViewById(R.id.question);
         editCorrect = (EditText) findViewById(R.id.correct);
         editWrong1 = (EditText) findViewById(R.id.wrong1);
@@ -46,6 +47,16 @@ public class AddQuestion extends ActionBarActivity {
         editWrong3 = (EditText) findViewById(R.id.wrong3);
 
         bSubmit = (Button) findViewById(R.id.button);
+        bBack = (Button) findViewById(R.id.backButton);
+
+        View.OnClickListener backList = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddQuestion.this, MainActivity.class));
+            }
+        };
+
+        bBack.setOnClickListener(backList);
 
         bSubmit.setOnClickListener(new View.OnClickListener() {
 
@@ -53,52 +64,57 @@ public class AddQuestion extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0){
-                String Id = "" + editId.getText().toString();
-                String Question = "" + editQuestion.getText().toString();
-                String Correct = "" + editCorrect.getText().toString();
-                String Wrong1 = "" + editWrong1.getText().toString();
-                String Wrong2 = "" + editWrong2.getText().toString();
-                String Wrong3 = "" + editWrong3.getText().toString();
+                    String Question = "" + editQuestion.getText().toString();
+                    String Correct = "" + editCorrect.getText().toString();
+                    String Wrong1 = "" + editWrong1.getText().toString();
+                    String Wrong2 = "" + editWrong2.getText().toString();
+                    String Wrong3 = "" + editWrong3.getText().toString();
 
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-                nameValuePairs.add(new BasicNameValuePair("Id", Id));
-                nameValuePairs.add(new BasicNameValuePair("Question", Question));
-                nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
-                nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
-                nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
-                nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
+                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 
-                try{
-                    HttpClient httpClient = new DefaultHttpClient();
+                    //TODO kolla slump id!
+                    nameValuePairs.add(new BasicNameValuePair("Id", "" + System.currentTimeMillis()));
+                    nameValuePairs.add(new BasicNameValuePair("Question", Question));
+                    nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
+                    nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
+                    nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
+                    nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
 
-                    HttpPost httpPost = new HttpPost("http://www.ilmkandidat.byethost7.com/addQuestion.php");
+                    try {
+                        HttpClient httpClient = new DefaultHttpClient();
 
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+                        HttpPost httpPost = new HttpPost("http://www.ilmkandidat.byethost7.com/addQuestion.php");
 
-                    HttpResponse response = httpClient.execute(httpPost);
+                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-                    HttpEntity entity = response.getEntity();
+                        HttpResponse response = httpClient.execute(httpPost);
 
-                    is = entity.getContent();
+                        HttpEntity entity = response.getEntity();
 
-                    String msg = "Data entered succesfully";
-                    Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                        is = entity.getContent();
+
+                        String msg = "Data entered succesfully";
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        clearDisplay();
+                    } catch (ClientProtocolException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-
-            }
         });
     }
 
-
-
-
+    private void clearDisplay() {
+        editQuestion.setText("");
+        editCorrect.setText("");
+        editWrong1.setText("");
+        editWrong2.setText("");
+        editWrong3.setText("");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

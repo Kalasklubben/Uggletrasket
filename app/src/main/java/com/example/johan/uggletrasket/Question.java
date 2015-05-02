@@ -17,6 +17,10 @@ public class Question {
         ID = "ID" + System.currentTimeMillis();
     }
 
+    public void setID(String newID){
+        this.ID = newID;
+    }
+
     public String getID(){
         return ID;
     }

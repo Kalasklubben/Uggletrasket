@@ -40,7 +40,7 @@ public class QuestionActivity extends ActionBarActivity{
     //Declaring
     private Button[] buttonArray = new Button[4];
     private TextView questionView;
-    private Question question;
+    private QuestionList questions;
     private int correctButtonID;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class QuestionActivity extends ActionBarActivity{
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
         //Get question from LoadQuestion class, using string from strings.xml
-        this.question = LoadQuestion.getData(getResources().getString(R.string.getAllCustomers));
+        this.questions = LoadQuestions.getData(getResources().getString(R.string.getAllQuestions));
 
         //Connect ID to buttons
         buttonArray[0] = (Button) findViewById(R.id.alternativeA);
@@ -66,7 +66,12 @@ public class QuestionActivity extends ActionBarActivity{
             public void onClick(View v) {
                 if(v.getId() == correctButtonID){
                     //Correct answer
-                    showMessage("Correct!");
+                   if(questions.endOfList())
+                        startActivity(new Intent(QuestionActivity.this, MainActivity.class));
+                   else {
+                       showMessage("Correct!");
+                       displayQuestion(questions.getNext());
+                   }
                 }else{
                     //Wrong answer
                     showMessage("Wrong!");
@@ -78,12 +83,11 @@ public class QuestionActivity extends ActionBarActivity{
         for(int i = 0; i < 4; i++)
             buttonArray[i].setOnClickListener(list);
 
-        //Display question
-        displayQuestion();
+       displayQuestion(questions.getNext());
     }
 
     //Method to display question to private instance
-    private void displayQuestion() {
+    private void displayQuestion(Question question) {
 
         //Displaying alternatives random
         questionView.setText(question.getQuestion());
