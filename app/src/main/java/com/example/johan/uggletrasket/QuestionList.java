@@ -1,6 +1,7 @@
 package com.example.johan.uggletrasket;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * Created by David on 01/05/2015.
@@ -13,7 +14,7 @@ public class QuestionList {
     private int noQuestions;
 
     public QuestionList(){
-        ID = "ID" + System.currentTimeMillis( );
+        ID = UUID.randomUUID().toString();
         allQuestions = new ArrayList<>();
         cursor = 0;
         noQuestions = 0;

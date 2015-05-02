@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class AddQuestion extends ActionBarActivity {
@@ -72,8 +73,7 @@ public class AddQuestion extends ActionBarActivity {
 
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 
-                    //TODO kolla slump id!
-                    nameValuePairs.add(new BasicNameValuePair("Id", "" + System.currentTimeMillis()));
+                    nameValuePairs.add(new BasicNameValuePair("Id", UUID.randomUUID().toString()));
                     nameValuePairs.add(new BasicNameValuePair("Question", Question));
                     nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
                     nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));

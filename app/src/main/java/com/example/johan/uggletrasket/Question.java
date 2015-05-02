@@ -1,5 +1,7 @@
 package com.example.johan.uggletrasket;
 
+import java.util.UUID;
+
 /**
  * Created by David on 27/04/2015.
  */
@@ -14,7 +16,7 @@ public class Question {
 
     //Constructor
     public Question(){
-        ID = "ID" + System.currentTimeMillis();
+        ID = UUID.randomUUID().toString();
     }
 
     public void setID(String newID){
