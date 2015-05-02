@@ -13,7 +13,8 @@ import android.app.Activity;
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button answer,create;
+    private Button next, addQuest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +22,27 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //Connect ID to button
-        answer = (Button) findViewById(R.id.answerButton);
-        create = (Button) findViewById(R.id.createQuestionButton);
+        next = (Button) findViewById(R.id.nextButton);
+        addQuest= (Button) findViewById(R.id.addQuestButton);
 
         //Listener for next button
-        View.OnClickListener list = new View.OnClickListener() {
+        View.OnClickListener listNext = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getId() == answer.getId())
-                    startActivity(new Intent(MainActivity.this, QuestionActivity.class));
-                else if(v.getId() == create.getId())
-                    startActivity(new Intent(MainActivity.this, CreateQuestionActivity.class));
+                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
             }
         };
 
-        answer.setOnClickListener(list);
-        create.setOnClickListener(list);
+        next.setOnClickListener(listNext);
+
+        View.OnClickListener listAdd = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, AddQuestion.class));
+            }
+        };
+
+        addQuest.setOnClickListener(listAdd);
     }
 
     @Override
