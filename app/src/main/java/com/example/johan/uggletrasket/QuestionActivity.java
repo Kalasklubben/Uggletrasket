@@ -74,6 +74,8 @@ public class QuestionActivity extends ActionBarActivity{
                     wrongAnswers++;
                     Toast.makeText(QuestionActivity.this, "Wrong!", Toast.LENGTH_SHORT).show();
                 }
+                //if there are no more questions, sends data containing number of correct answer
+                //together with the questions themselves. The questions are then listed in the result activity
                 if (questions.endOfList()) {
                     Intent i = new Intent(QuestionActivity.this, QuizResult.class);
                     i.putExtra("correct", correctAnswers);
