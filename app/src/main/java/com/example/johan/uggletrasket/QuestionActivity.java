@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by David on 27/04/2015.
@@ -42,6 +43,7 @@ public class QuestionActivity extends ActionBarActivity{
     private TextView questionView;
     private QuestionList questions;
     private int correctButtonID;
+    private int correctAnswers = 0, wrongAnswers = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,26 +66,31 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v.getId() == correctButtonID){
-                    //Correct answer
-                   if(questions.endOfList())
-                        startActivity(new Intent(QuestionActivity.this, MainActivity.class));
-                   else {
-                       showMessage("Correct!");
-                       displayQuestion(questions.getNext());
-                   }
-                }else{
+                if (v.getId() == correctButtonID) {
+                    correctAnswers++;
+                    Toast.makeText(QuestionActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
+                } else {
                     //Wrong answer
-                    showMessage("Wrong!");
+                    wrongAnswers++;
+                    Toast.makeText(QuestionActivity.this, "Wrong!", Toast.LENGTH_SHORT).show();
+                }
+                if (questions.endOfList()) {
+                    Intent i = new Intent(QuestionActivity.this, QuizResult.class);
+                    i.putExtra("correct", correctAnswers);
+                    i.putExtra("wrong", wrongAnswers);
+                    i.putExtra("questions", questions.getQuestions());
+
+                    startActivity(i);
+                } else {
+                    displayQuestion(questions.getNext());
                 }
             }
         };
 
         //Listener on buttons
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             buttonArray[i].setOnClickListener(list);
-
-       displayQuestion(questions.getNext());
+        displayQuestion(questions.getNext());
     }
 
     //Method to display question to private instance
@@ -106,7 +113,6 @@ public class QuestionActivity extends ActionBarActivity{
             if(buttonArray[i].getText() == question.getAnswer())
                 correctButtonID = buttonArray[i].getId();
         }
-
     }
 
     //Method for showing pop up, for the time being

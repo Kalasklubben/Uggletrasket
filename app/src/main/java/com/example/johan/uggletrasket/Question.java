@@ -1,5 +1,6 @@
 package com.example.johan.uggletrasket;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -7,10 +8,10 @@ import java.util.UUID;
  */
 
 //Class representing a question
-public class Question {
+public class Question implements Serializable{
     private String ID;
     private String question;
-    private String correctAnswer;
+    private String correctAnswer, userAnswer;
     private String[] alternatives = new String[3];
     private int numberOfAlts = 0;
 
@@ -41,6 +42,14 @@ public class Question {
 
     public String getAnswer(){
         return correctAnswer;
+    }
+
+    public void setUserAnswer(String answer) {
+        userAnswer = answer;
+    }
+
+    public String getUserAnswer() {
+        return userAnswer;
     }
 
     public void addAlternative(String alt) throws Exception{
