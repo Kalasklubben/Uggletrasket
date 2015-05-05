@@ -66,19 +66,23 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Button answer = (Button) findViewById(v.getId());
+                questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
+
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
-                    Toast.makeText(QuestionActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(QuestionActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
                 } else {
                     //Wrong answer
                     wrongAnswers++;
-                    Toast.makeText(QuestionActivity.this, "Wrong!", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(QuestionActivity.this, "Wrong!", Toast.LENGTH_SHORT).show();
                 }
                 if (questions.endOfList()) {
                     Intent i = new Intent(QuestionActivity.this, QuizResult.class);
                     i.putExtra("correct", correctAnswers);
                     i.putExtra("wrong", wrongAnswers);
-                    i.putExtra("questions", questions.getQuestions());
+                    i.putExtra("questions", questions);
 
                     startActivity(i);
                 } else {

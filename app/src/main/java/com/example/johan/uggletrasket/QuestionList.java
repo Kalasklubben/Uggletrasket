@@ -32,6 +32,10 @@ public class QuestionList implements Serializable{
         return allQuestions.get(cursor-1);
     }
 
+    public Question getCurrentQuestion(){
+        return allQuestions.get(cursor-1);
+    }
+
     public void resetCursor(){
         cursor = 0;
     }

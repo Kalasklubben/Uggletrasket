@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class QuizResult extends ActionBarActivity {
 
-    ArrayList<Question> questions = new ArrayList<>();
+    QuestionList questions;
     QuizListAdapter qla;
     ListView questionList;
 
@@ -40,9 +40,10 @@ public class QuizResult extends ActionBarActivity {
         if (extras != null) {
             correctAnswers = extras.getInt("correct");
             wrongAnswers = extras.getInt("wrong");
+            questions = (QuestionList) extras.get("questions");
+            questions.resetCursor();
         }
         result.setText("Score " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
-        questions = (ArrayList<Question>) getIntent().getSerializableExtra("questions");
         populateMealList();
         };
 
@@ -53,9 +54,10 @@ public class QuizResult extends ActionBarActivity {
     private void populateMealList(){
         questionList = (ListView) findViewById(R.id.question_list);
         qla = new QuizListAdapter(this);
-        for (Question da: questions){
-            qla.add(da);
-        }
+
+        for(int i = 0; i < questions.getSize(); i++)
+            qla.add(questions.getNext());
+
         if(questionList != null){
             questionList.setAdapter(qla);
         }
@@ -85,12 +87,12 @@ public class QuizResult extends ActionBarActivity {
             // Fetching the views of the layout
             TextView question = (TextView) convertView.findViewById(R.id.quiz_item_question);
             TextView correctAnswer = (TextView) convertView.findViewById(R.id.quiz_item_correct_answer);
-            //TextView userAnswer = (TextView) convertView.findViewById(R.id.quiz_item_your_answer);
+            TextView userAnswer = (TextView) convertView.findViewById(R.id.quiz_item_your_answer);
 
             // Populate the data into the template layout (quiz_item)
             question.setHint(getItem(position).getQuestion());
             correctAnswer.setHint(getItem(position).getAnswer());
-            //userAnswer.setHint(getItem(position).getUserAnswer());
+            userAnswer.setHint(getItem(position).getUserAnswer());
 
             return convertView;
         }
