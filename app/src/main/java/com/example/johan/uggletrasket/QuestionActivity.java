@@ -72,11 +72,8 @@ public class QuestionActivity extends ActionBarActivity{
 
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
-                    //Toast.makeText(QuestionActivity.this, "Correct!", Toast.LENGTH_SHORT).show();
                 } else {
-                    //Wrong answer
                     wrongAnswers++;
-                    //Toast.makeText(QuestionActivity.this, "Wrong!", Toast.LENGTH_SHORT).show();
                 }
                 //if there are no more questions, sends data containing number of correct answer
                 //together with the questions themselves. The questions are then listed in the result activity
@@ -86,6 +83,7 @@ public class QuestionActivity extends ActionBarActivity{
                     i.putExtra("wrong", wrongAnswers);
                     i.putExtra("questions", questions);
 
+                    uploadAnswers();
                     startActivity(i);
                 } else {
                     displayQuestion(questions.getNext());
@@ -96,7 +94,51 @@ public class QuestionActivity extends ActionBarActivity{
         //Listener on buttons
         for (int i = 0; i < 4; i++)
             buttonArray[i].setOnClickListener(list);
+
         displayQuestion(questions.getNext());
+    }
+
+
+    //TODO
+    //
+    //Some of the following methods might be more suitable in LoadQuestions
+    private void uploadAnswers() {
+        questions.resetCursor();
+        for(int i = 0; i < questions.getSize(); i++){
+            Question temp = questions.getNext();
+            if(temp.getAnswer()== temp.getUserAnswer()) {
+                updateNoCurrentAnswers(temp);
+                updateShowtime(temp);
+            }else
+                updateShowtime(temp);
+        }
+    }
+
+    private void updateShowtime(Question q){
+        //TODO
+        //Question temp = getQuestion(q.getId()));
+        //int latest = temp.getShowTimes());
+        //temp.setShowTimes(latest++);
+        //updateQuestion(temp);
+    }
+
+    private void updateNoCurrentAnswers(Question q){
+        //TODO
+        //Question temp = getQuestion(q.getId());
+        //int latest = temp.getNoCurrentAnswers();
+        //temp.setNoCurrentAnswers(latest++);
+        //updateQuestion(temp);
+    }
+
+    private Question getQuestion(String ID){
+        //TODO
+        //Load single question
+        return new Question();
+    }
+
+    private void updateQuestion(Question q){
+        //TODO
+        //Update question
     }
 
     //Method to display question to private instance
@@ -121,19 +163,6 @@ public class QuestionActivity extends ActionBarActivity{
         }
     }
 
-    //Method for showing pop up, for the time being
-    private void showMessage(String message){
-        AlertDialog alertDialog = new AlertDialog.Builder(QuestionActivity.this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
-        alertDialog.setMessage(message);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
-    }
 }
 
 

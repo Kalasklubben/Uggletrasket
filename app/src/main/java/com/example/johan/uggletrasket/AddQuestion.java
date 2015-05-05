@@ -79,11 +79,13 @@ public class AddQuestion extends ActionBarActivity {
                     nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
                     nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
                     nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
+                    nameValuePairs.add(new BasicNameValuePair("Showtimes", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("noCorrectAnswer", "0"));
 
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
 
-                        HttpPost httpPost = new HttpPost("http://www.ilmkandidat.byethost7.com/addQuestion.php");
+                        HttpPost httpPost = new HttpPost(getResources().getString(R.string.addQuestion));
 
                         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 

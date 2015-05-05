@@ -14,6 +14,7 @@ public class Question implements Serializable{
     private String correctAnswer, userAnswer;
     private String[] alternatives = new String[3];
     private int numberOfAlts = 0;
+    private int showTimes, noCorrectAnswers;
 
     //Constructor
     public Question(){
@@ -68,5 +69,21 @@ public class Question implements Serializable{
     public void removeAllAlternatives(){
         alternatives = new String[3];
         numberOfAlts = 0;
+    }
+
+    public void setNoCorrectAnswers(int nca){
+        noCorrectAnswers = nca;
+    }
+
+    public int getNoCorrectAnswers(){
+        return noCorrectAnswers;
+    }
+
+    public void setShowTimes(int st){
+        showTimes = st;
+    }
+
+    public int getShowTimes(){
+        return showTimes;
     }
 }

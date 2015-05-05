@@ -27,9 +27,12 @@ public class QuestionList implements Serializable{
     }
 
     public Question getNext(){
-        if(cursor < noQuestions)
+        Question temp = new Question();
+        if(cursor < noQuestions){
+            temp = allQuestions.get(cursor);
             cursor++;
-        return allQuestions.get(cursor-1);
+        }
+        return temp;
     }
 
     public Question getCurrentQuestion(){

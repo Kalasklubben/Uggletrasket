@@ -20,11 +20,10 @@ import java.io.InputStreamReader;
 public class LoadQuestions {
 
     public static QuestionList getData(String script){
-        //Declaring question to return
-
 
         String result = "";
         InputStream isr = null;
+
         try{
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost(script); //YOUR PHP SCRIPT ADDRESS
@@ -65,6 +64,10 @@ public class LoadQuestions {
 
                 temp.setQuestion(json.getString("Question"));
                 temp.setAnswer(json.getString("Correct"));
+
+                //TODO
+               // temp.setNoCorrectAnswers(Integer.parseInt(json.getString("noCorrectAnswer")));
+               // temp.setShowTimes(Integer.parseInt(json.getString("Showtimes")));
 
                 try {
                     temp.addAlternative(json.getString("Wrong1"));
