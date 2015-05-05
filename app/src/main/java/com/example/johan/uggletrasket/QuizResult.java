@@ -36,6 +36,7 @@ public class QuizResult extends ActionBarActivity {
         TextView result = (TextView) findViewById(R.id.result);
         questionList = (ListView) findViewById(R.id.question_list);
 
+        //retrieves info from another activity (QuestionActivity)
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             correctAnswers = extras.getInt("correct");
@@ -43,15 +44,15 @@ public class QuizResult extends ActionBarActivity {
             questions = (QuestionList) extras.get("questions");
             questions.resetCursor();
         }
-        result.setText("Score " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
-        populateMealList();
+
+        result.setText("Resultat " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
+        populateQuestionListView();
+
         };
 
-    // Provides an adapter for the list items. Basically inflates a custom view
-    //with values from a Question object
-
-
-    private void populateMealList(){
+    // Adds all questions from an array of questions to the list view in the result activity
+    // using the QuizListAdapter for every Question object
+    private void populateQuestionListView(){
         questionList = (ListView) findViewById(R.id.question_list);
         qla = new QuizListAdapter(this);
 
@@ -70,6 +71,9 @@ public class QuizResult extends ActionBarActivity {
         return true;
     }
 
+    //An adapter class to assist the making of a list of Questions shown in activity_quiz_result
+    //Takes a question_item layout and retrieves views from it. Then fills the views with
+    //appropriate values from the Question object. The result corresponds to an item in the list
     private class QuizListAdapter extends ArrayAdapter<Question>
     {
         public QuizListAdapter(Context context)
