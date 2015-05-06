@@ -64,17 +64,30 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Correct answer
                 if(v.getId() == correctButtonID){
-                    //Correct answer
-                   if(questions.endOfList())
-                        startActivity(new Intent(QuestionActivity.this, MainActivity.class));
+                   if(questions.endOfList()) {
+                       questions.setAnswer(true);
+                       showResultMsg();
+                       //startActivity(new Intent(QuestionActivity.this, ResultActivity.class));
+                   }
                    else {
                        showMessage("Correct!");
+                       questions.setAnswer(true);
                        displayQuestion(questions.getNext());
                    }
-                }else{
-                    //Wrong answer
-                    showMessage("Wrong!");
+                }
+                //Wrong answer
+                else{
+                    if(questions.endOfList()) {
+                        showResultMsg();
+                        //startActivity(new Intent(QuestionActivity.this, ResultActivity.class));
+                    }
+                    else {
+                        //Wrong answer
+                        showMessage("Wrong!");
+                        displayQuestion(questions.getNext());
+                    }
                 }
             }
         };
@@ -107,6 +120,19 @@ public class QuestionActivity extends ActionBarActivity{
                 correctButtonID = buttonArray[i].getId();
         }
 
+    }
+
+    private void showResultMsg() {
+        int noQuestions = questions.getNoQuestions();
+        int noCorrect = 0;
+        for(Boolean a: questions.getAnswers()) {
+            //if(a = true)
+                noCorrect++;
+        }
+        String result = noCorrect + "/" + noQuestions;
+        Intent intent = new Intent(QuestionActivity.this, ResultActivity.class);
+        intent.putExtra("result", result);
+        startActivity(intent);
     }
 
     //Method for showing pop up, for the time being
