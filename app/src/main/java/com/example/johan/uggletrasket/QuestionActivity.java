@@ -31,6 +31,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by David on 27/04/2015.
@@ -42,6 +43,7 @@ public class QuestionActivity extends ActionBarActivity{
     private TextView questionView;
     private QuestionList questions;
     private int correctButtonID;
+    private int correctAnswers = 0, wrongAnswers = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,39 +66,80 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Correct answer
-                if(v.getId() == correctButtonID){
-                   if(questions.endOfList()) {
-                       questions.setAnswer(true);
-                       showResultMsg();
-                       //startActivity(new Intent(QuestionActivity.this, ResultActivity.class));
-                   }
-                   else {
-                       showMessage("Correct!");
-                       questions.setAnswer(true);
-                       displayQuestion(questions.getNext());
-                   }
+
+
+                Button answer = (Button) findViewById(v.getId());
+                questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
+
+                if (v.getId() == correctButtonID) {
+                    correctAnswers++;
+                } else {
+                    wrongAnswers++;
                 }
-                //Wrong answer
-                else{
-                    if(questions.endOfList()) {
-                        showResultMsg();
-                        //startActivity(new Intent(QuestionActivity.this, ResultActivity.class));
-                    }
-                    else {
-                        //Wrong answer
-                        showMessage("Wrong!");
-                        displayQuestion(questions.getNext());
-                    }
+                //if there are no more questions, sends data containing number of correct answer
+                //together with the questions themselves. The questions are then listed in the result activity
+                if (questions.endOfList()) {
+                    Intent i = new Intent(QuestionActivity.this, QuizResult.class);
+                    i.putExtra("correct", correctAnswers);
+                    i.putExtra("wrong", wrongAnswers);
+                    i.putExtra("questions", questions);
+
+                    uploadAnswers();
+                    startActivity(i);
+                } else {
+                    displayQuestion(questions.getNext());
                 }
             }
         };
 
         //Listener on buttons
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
             buttonArray[i].setOnClickListener(list);
 
-       displayQuestion(questions.getNext());
+        displayQuestion(questions.getNext());
+    }
+
+
+    //TODO
+    //
+    //Some of the following methods might be more suitable in LoadQuestions
+    private void uploadAnswers() {
+        questions.resetCursor();
+        for(int i = 0; i < questions.getSize(); i++){
+            Question temp = questions.getNext();
+            if(temp.getAnswer()== temp.getUserAnswer()) {
+                updateNoCurrentAnswers(temp);
+                updateShowtime(temp);
+            }else
+                updateShowtime(temp);
+        }
+    }
+
+    private void updateShowtime(Question q){
+        //TODO
+        //Question temp = getQuestion(q.getId()));
+        //int latest = temp.getShowTimes());
+        //temp.setShowTimes(latest++);
+        //updateQuestion(temp);
+    }
+
+    private void updateNoCurrentAnswers(Question q){
+        //TODO
+        //Question temp = getQuestion(q.getId());
+        //int latest = temp.getNoCurrentAnswers();
+        //temp.setNoCurrentAnswers(latest++);
+        //updateQuestion(temp);
+    }
+
+    private Question getQuestion(String ID){
+        //TODO
+        //Load single question
+        return new Question();
+    }
+
+    private void updateQuestion(Question q){
+        //TODO
+        //Update question
     }
 
     //Method to display question to private instance
@@ -119,34 +162,6 @@ public class QuestionActivity extends ActionBarActivity{
             if(buttonArray[i].getText() == question.getAnswer())
                 correctButtonID = buttonArray[i].getId();
         }
-
-    }
-
-    private void showResultMsg() {
-        int noQuestions = questions.getNoQuestions();
-        int noCorrect = 0;
-        for(Boolean a: questions.getAnswers()) {
-            //if(a = true)
-                noCorrect++;
-        }
-        String result = noCorrect + "/" + noQuestions;
-        Intent intent = new Intent(QuestionActivity.this, ResultActivity.class);
-        intent.putExtra("result", result);
-        startActivity(intent);
-    }
-
-    //Method for showing pop up, for the time being
-    private void showMessage(String message){
-        AlertDialog alertDialog = new AlertDialog.Builder(QuestionActivity.this).create();
-        alertDialog.setTitle(getResources().getString(R.string.app_name));
-        alertDialog.setMessage(message);
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
     }
 }
 

@@ -1,12 +1,13 @@
 package com.example.johan.uggletrasket;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * Created by David on 01/05/2015.
  */
-public class QuestionList {
+public class QuestionList implements Serializable{
 
     private ArrayList<Question> allQuestions;
     private int cursor;
@@ -27,8 +28,15 @@ public class QuestionList {
     }
 
     public Question getNext(){
-        if(cursor < noQuestions)
+        Question temp = new Question();
+        if(cursor < noQuestions){
+            temp = allQuestions.get(cursor);
             cursor++;
+        }
+        return temp;
+    }
+
+    public Question getCurrentQuestion(){
         return allQuestions.get(cursor-1);
     }
 
@@ -65,6 +73,10 @@ public class QuestionList {
         allQuestions.remove(q);
         if(cursor == getSize())
             cursor--;
+    }
+
+    public ArrayList<Question> getQuestions() {
+        return allQuestions;
     }
 
     public boolean endOfList(){

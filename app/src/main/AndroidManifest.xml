@@ -25,12 +25,13 @@
             android:label="@string/app_name" />
         <activity
             android:name=".AddQuestion"
-            android:label="@string/title_activity_add_question" >
-        </activity>
+
+            android:label="@string/title_activity_add_question" />
         <activity
-            android:name=".ResultActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:name=".QuizResult"
+            android:label="QuizResult">
+
+            </activity>
 
     </application>
 
