@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <TextView android:text="Hello Alex and Niklas Branc! "
+    <TextView android:text="Hello Alex and Niklas Branch! "
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
