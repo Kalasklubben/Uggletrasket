@@ -10,7 +10,7 @@
     <ListView
         android:id="@+id/quiz_list_in_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="400dp" >
     </ListView>
 
     <LinearLayout
@@ -31,7 +31,8 @@
             android:layout_height="wrap_content"
             android:text="Starta quiz"
             android:id="@+id/quiz_list_start_button"
-            android:onClick="onButtonClick"/>
+            android:onClick="onButtonClick"
+            android:clickable="false" />
     </LinearLayout>
 
 </LinearLayout>

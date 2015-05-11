@@ -1,18 +1,15 @@
 package com.example.johan.uggletrasket;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Vibrator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +40,7 @@ public class QuestionActivity extends ActionBarActivity{
         if(quizInfo != null) {
             quizId = quizInfo.getString("quizId");
         }
+        Toast.makeText(this, "" + quizId, Toast.LENGTH_LONG).show();
         //Get question from LoadQuestion class, using string from strings.xml and the quizId
         this.questions = LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizId);
 

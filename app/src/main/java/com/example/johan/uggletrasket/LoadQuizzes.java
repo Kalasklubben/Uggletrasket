@@ -65,6 +65,7 @@ public class LoadQuizzes {
                 try {
                     temp.setName(json.getString("Name"));
                     temp.setPassword(json.getString("Password"));
+                    temp.setID(json.getString("Id"));
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
