@@ -11,6 +11,7 @@
 
     <string name="getAllQuestions">http://www.ilmkandidat.byethost7.com/getQuestions.php</string>
     <string name="addQuestion">http://www.ilmkandidat.byethost7.com/addQuestion.php</string>
+    <string name="updateShow">http://www.ilmkandidat.byethost7.com/updateShow.php</string>
     <string name="getOneQuestion">http://www.ilmkandidat.byethost7.com/getOneQuestion.php</string>
     <string name="errorDatabase">Could not connect to database!"</string>
 

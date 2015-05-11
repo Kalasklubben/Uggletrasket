@@ -13,7 +13,7 @@ import android.app.Activity;
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next, addQuest;
+    private Button next, addQuest, updateButton;
 
 
     @Override
@@ -24,6 +24,7 @@ public class MainActivity extends ActionBarActivity {
         //Connect ID to button
         next = (Button) findViewById(R.id.nextButton);
         addQuest= (Button) findViewById(R.id.addQuestButton);
+        updateButton = (Button) findViewById(R.id.testUpdate);
 
         //Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
@@ -43,6 +44,19 @@ public class MainActivity extends ActionBarActivity {
         };
 
         addQuest.setOnClickListener(listAdd);
+
+        View.OnClickListener testUpdate = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int temp = (int) Math.floor((Math.random() * 100) + 1);
+                String showtime = "" + temp;
+
+                Update.updateShowtime("d0370868-197b-4b78-88cd-05a3cfed00b3", showtime);
+
+            }
+        };
+
+        updateButton.setOnClickListener(testUpdate);
     }
 
     @Override

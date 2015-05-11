@@ -11,18 +11,25 @@ import android.widget.TextView;
 import android.app.Activity;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -44,6 +51,7 @@ public class QuestionActivity extends ActionBarActivity{
     private QuestionList questions;
     private int correctButtonID;
     private int correctAnswers = 0, wrongAnswers = 0;
+    InputStream is = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +74,21 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String Id = "" + questions.getCurrentQuestion().getID();
+                int temp = (int) Math.floor((Math.random() * 100) + 1);
+                String showtime = "" + temp;
+                Update.updateShowtime(Id, showtime);
 
                 Button answer = (Button) findViewById(v.getId());
                 questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
 
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
+
+
                 } else {
                     wrongAnswers++;
+
                 }
                 //if there are no more questions, sends data containing number of correct answer
                 //together with the questions themselves. The questions are then listed in the result activity
@@ -83,11 +98,12 @@ public class QuestionActivity extends ActionBarActivity{
                     i.putExtra("wrong", wrongAnswers);
                     i.putExtra("questions", questions);
 
-                    uploadAnswers();
+                    //uploadAnswers();
                     startActivity(i);
                 } else {
                     displayQuestion(questions.getNext());
                 }
+
             }
         };
 
@@ -107,7 +123,7 @@ public class QuestionActivity extends ActionBarActivity{
         for(int i = 0; i < questions.getSize(); i++){
             Question temp = questions.getNext();
             if(temp.getAnswer()== temp.getUserAnswer()) {
-                updateNoCurrentAnswers(temp);
+                //updateNoCurrentAnswers(temp);
                 updateShowtime(temp);
             }else
                 updateShowtime(temp);
@@ -115,11 +131,11 @@ public class QuestionActivity extends ActionBarActivity{
     }
 
     private void updateShowtime(Question q){
-        //TODO
-        //Question temp = getQuestion(q.getId()));
-        //int latest = temp.getShowTimes());
-        //temp.setShowTimes(latest++);
-        //updateQuestion(temp);
+        int temp = (int) Math.floor((Math.random() * 100) + 1);
+        String showtime = "" + temp;
+        Update.updateShowtime(q.getID(), showtime);
+
+
     }
 
     private void updateNoCurrentAnswers(Question q){
