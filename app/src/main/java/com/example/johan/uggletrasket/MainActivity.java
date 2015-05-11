@@ -24,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
         //Connect ID to button
         next = (Button) findViewById(R.id.nextButton);
         addQuest= (Button) findViewById(R.id.addQuestButton);
-        updateButton = (Button) findViewById(R.id.testUpdate);
+        updateButton = (Button) findViewById(R.id.statistics);
 
         //Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
