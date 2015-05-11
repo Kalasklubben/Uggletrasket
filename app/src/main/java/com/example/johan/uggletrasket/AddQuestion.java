@@ -34,6 +34,7 @@ public class AddQuestion extends ActionBarActivity {
 
     EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
     Button bSubmit, bBack;
+    private int noQuestions = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +72,16 @@ public class AddQuestion extends ActionBarActivity {
                     String Wrong2 = "" + editWrong2.getText().toString();
                     String Wrong3 = "" + editWrong3.getText().toString();
 
+                    //Get quizInfo from AddQuiz
+                    String quizName = null;
+                    String quizId = null;
+                    Bundle quizInfo = getIntent().getExtras();
+                    if(quizInfo != null) {
+                        quizName = quizInfo.getString("quizName");
+                        quizId = quizInfo.getString("quizId");
+                    }
+
+
                     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 
                     nameValuePairs.add(new BasicNameValuePair("Id", UUID.randomUUID().toString()));
@@ -80,7 +91,8 @@ public class AddQuestion extends ActionBarActivity {
                     nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
                     nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
                     nameValuePairs.add(new BasicNameValuePair("Showtimes", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("noCorrectAnswer", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
 
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
@@ -94,8 +106,8 @@ public class AddQuestion extends ActionBarActivity {
                         HttpEntity entity = response.getEntity();
 
                         is = entity.getContent();
-
-                        String msg = "Data entered succesfully";
+                        noQuestions++;
+                        String msg = noQuestions + " entered into " + quizName;
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
                         clearDisplay();
                     } catch (ClientProtocolException e) {

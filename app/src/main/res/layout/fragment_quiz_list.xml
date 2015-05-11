@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/quiz_list_in_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="400dp" >
+    </ListView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tillbaka"
+            android:id="@+id/quiz_list_back_button"
+            android:onClick="onButtonClick"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Starta quiz"
+            android:id="@+id/quiz_list_start_button"
+            android:onClick="onButtonClick"
+            android:clickable="false" />
+    </LinearLayout>
+
+</LinearLayout>

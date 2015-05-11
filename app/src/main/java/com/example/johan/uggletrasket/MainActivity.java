@@ -1,20 +1,24 @@
 package com.example.johan.uggletrasket;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.app.Activity;
 
 
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
     private Button next, addQuest;
-
+    private QuizListFragment dialog;
+    FragmentManager manager;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,22 +27,36 @@ public class MainActivity extends ActionBarActivity {
 
         //Connect ID to button
         next = (Button) findViewById(R.id.nextButton);
-        addQuest= (Button) findViewById(R.id.addQuestButton);
+        addQuest = (Button) findViewById(R.id.addQuestButton);
 
-        //Listener for next button
+
+        /*Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, QuestionActivity.class));
             }
-        };
+        };*/
 
+        //Listener for next button
+        View.OnClickListener listNext = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
+
+                manager = getFragmentManager();
+                dialog = new QuizListFragment();
+                dialog.show(manager, "dialog");
+
+
+            }
+        };
         next.setOnClickListener(listNext);
 
         View.OnClickListener listAdd = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddQuestion.class));
+                startActivity(new Intent(MainActivity.this, AddQuiz.class));
             }
         };
 
@@ -65,4 +83,12 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void checkPassword(Quiz q) {
+
+    }
+
+
+
 }
+

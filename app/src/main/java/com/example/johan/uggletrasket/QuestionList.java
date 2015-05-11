@@ -13,6 +13,7 @@ public class QuestionList implements Serializable{
     private int cursor;
     private String ID;
     private int noQuestions;
+    private ArrayList<Boolean> answers = new ArrayList<Boolean>();
 
     public QuestionList(){
         ID = UUID.randomUUID().toString();
@@ -54,6 +55,18 @@ public class QuestionList implements Serializable{
     public void removeAllQuestion(){
         allQuestions.removeAll(allQuestions);
         noQuestions = 0;
+    }
+
+    public void setAnswer(boolean answer) {
+        answers.add(answer);
+    }
+
+    public int getNoQuestions() {
+        return noQuestions;
+    }
+
+    public ArrayList<Boolean> getAnswers() {
+        return answers;
     }
 
     public void removeQuestion(Question q){

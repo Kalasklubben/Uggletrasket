@@ -1,37 +1,18 @@
 package com.example.johan.uggletrasket;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.app.Activity;
+import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Random;
-
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
-import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Created by David on 27/04/2015.
@@ -48,12 +29,20 @@ public class QuestionActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        final Vibrator vibe = (Vibrator) QuestionActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
         //Alex code
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
-        //Get question from LoadQuestion class, using string from strings.xml
-        this.questions = LoadQuestions.getData(getResources().getString(R.string.getAllQuestions));
+        //Get the quizId that is used to get the correct questions.
+        String quizId = "";
+        Bundle quizInfo = getIntent().getExtras();
+        if(quizInfo != null) {
+            quizId = quizInfo.getString("quizId");
+        }
+        Toast.makeText(this, "" + quizId, Toast.LENGTH_LONG).show();
+        //Get question from LoadQuestion class, using string from strings.xml and the quizId
+        this.questions = LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizId);
 
         //Connect ID to buttons
         buttonArray[0] = (Button) findViewById(R.id.alternativeA);
@@ -67,12 +56,14 @@ public class QuestionActivity extends ActionBarActivity{
             @Override
             public void onClick(View v) {
 
+
                 Button answer = (Button) findViewById(v.getId());
                 questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
 
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
                 } else {
+                    vibe.vibrate(80);
                     wrongAnswers++;
                 }
                 //if there are no more questions, sends data containing number of correct answer
@@ -162,7 +153,6 @@ public class QuestionActivity extends ActionBarActivity{
                 correctButtonID = buttonArray[i].getId();
         }
     }
-
 }
 
 

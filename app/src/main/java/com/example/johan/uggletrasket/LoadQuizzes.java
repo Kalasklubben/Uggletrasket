@@ -1,6 +1,5 @@
 package com.example.johan.uggletrasket;
 
-import android.os.Bundle;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -16,18 +15,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by David on 28/04/2015.
+ * Created by Johan on 09/05/2015.
  */
-public class LoadQuestions {
+public class LoadQuizzes {
 
-    public static QuestionList getData(String script, String quizId){
+    public static QuizList getData(String script){
 
         String result = "";
         InputStream isr = null;
 
         try{
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(script + "?QuizId=" + quizId); //YOUR PHP SCRIPT ADDRESS
+            HttpPost httppost = new HttpPost(script); //YOUR PHP SCRIPT ADDRESS
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
             isr = entity.getContent();
@@ -51,7 +50,7 @@ public class LoadQuestions {
             Log.e("log_tag", "Error  converting result "+e.toString());
         }
 
-        QuestionList loadedQuestions = new QuestionList();
+        QuizList loadedQuizzes = new QuizList();
 
         //parse json data, and convert to question object
         try {
@@ -61,24 +60,17 @@ public class LoadQuestions {
             for(int i=0; i<jArray.length();i++){
                 JSONObject json = jArray.getJSONObject(i);
 
-                Question temp = new Question();
-
-                temp.setQuestion(json.getString("Question"));
-                temp.setAnswer(json.getString("Correct"));
-
-                //TODO
-               // temp.setNoCorrectAnswers(Integer.parseInt(json.getString("noCorrectAnswer")));
-               // temp.setShowTimes(Integer.parseInt(json.getString("Showtimes")));
+                Quiz temp = new Quiz();
 
                 try {
-                    temp.addAlternative(json.getString("Wrong1"));
-                    temp.addAlternative(json.getString("Wrong2"));
-                    temp.addAlternative(json.getString("Wrong3"));
+                    temp.setName(json.getString("Name"));
+                    temp.setPassword(json.getString("Password"));
+                    temp.setID(json.getString("Id"));
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                loadedQuestions.addQuestion(temp);
+                loadedQuizzes.addQuiz(temp);
 
             }
         } catch (Exception e) {
@@ -86,6 +78,6 @@ public class LoadQuestions {
             Log.e("log_tag", "Error Parsing Data "+e.toString());
         }
 
-        return loadedQuestions;
+        return loadedQuizzes;
     }
 }
