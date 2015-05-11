@@ -1,9 +1,11 @@
 package com.example.johan.uggletrasket;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
@@ -48,12 +50,19 @@ public class QuestionActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
+        final Vibrator vibe = (Vibrator) QuestionActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
         //Alex code
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
-        //Get question from LoadQuestion class, using string from strings.xml
-        this.questions = LoadQuestions.getData(getResources().getString(R.string.getAllQuestions));
+        //Get the quizId that is used to get the correct questions.
+        String quizId = "";
+        Bundle quizInfo = getIntent().getExtras();
+        if(quizInfo != null) {
+            quizId = quizInfo.getString("quizId");
+        }
+        //Get question from LoadQuestion class, using string from strings.xml and the quizId
+        this.questions = LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizId);
 
         //Connect ID to buttons
         buttonArray[0] = (Button) findViewById(R.id.alternativeA);
@@ -74,6 +83,7 @@ public class QuestionActivity extends ActionBarActivity{
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
                 } else {
+                    vibe.vibrate(80);
                     wrongAnswers++;
                 }
                 //if there are no more questions, sends data containing number of correct answer

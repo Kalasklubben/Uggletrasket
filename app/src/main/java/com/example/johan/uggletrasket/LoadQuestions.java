@@ -1,5 +1,6 @@
 package com.example.johan.uggletrasket;
 
+import android.os.Bundle;
 import android.util.Log;
 
 import org.apache.http.HttpEntity;
@@ -19,14 +20,14 @@ import java.io.InputStreamReader;
  */
 public class LoadQuestions {
 
-    public static QuestionList getData(String script){
+    public static QuestionList getData(String script, String quizId){
 
         String result = "";
         InputStream isr = null;
 
         try{
             HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(script); //YOUR PHP SCRIPT ADDRESS
+            HttpPost httppost = new HttpPost(script + "?QuizId=" + quizId); //YOUR PHP SCRIPT ADDRESS
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
             isr = entity.getContent();

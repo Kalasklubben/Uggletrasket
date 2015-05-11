@@ -25,6 +25,14 @@ public class MainActivity extends ActionBarActivity {
         next = (Button) findViewById(R.id.nextButton);
         addQuest= (Button) findViewById(R.id.addQuestButton);
 
+        /*Listener for next button
+        View.OnClickListener listNext = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
+            }
+        };*/
+
         //Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
             @Override
@@ -38,7 +46,7 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener listAdd = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddQuestion.class));
+                startActivity(new Intent(MainActivity.this, AddQuiz.class));
             }
         };
 
