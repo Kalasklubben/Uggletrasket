@@ -74,21 +74,17 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Id = "" + questions.getCurrentQuestion().getID();
-                int temp = (int) Math.floor((Math.random() * 100) + 1);
-                String showtime = "" + temp;
-                Update.updateShowtime(Id, showtime);
+               updateShowtime();
+
 
                 Button answer = (Button) findViewById(v.getId());
                 questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
 
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
-
-
+                    updateNoCurrentAnswers();
                 } else {
                     wrongAnswers++;
-
                 }
                 //if there are no more questions, sends data containing number of correct answer
                 //together with the questions themselves. The questions are then listed in the result activity
@@ -124,26 +120,25 @@ public class QuestionActivity extends ActionBarActivity{
             Question temp = questions.getNext();
             if(temp.getAnswer()== temp.getUserAnswer()) {
                 //updateNoCurrentAnswers(temp);
-                updateShowtime(temp);
-            }else
-                updateShowtime(temp);
+
+            }
         }
     }
 
-    private void updateShowtime(Question q){
-        int temp = (int) Math.floor((Math.random() * 100) + 1);
+    private void updateShowtime(){
+        int temp = questions.getCurrentQuestion().getShowTimes() + 1;
         String showtime = "" + temp;
-        Update.updateShowtime(q.getID(), showtime);
+        String Id = questions.getCurrentQuestion().getID();
+        Update.updateShowtime(Id, showtime);
 
 
     }
 
-    private void updateNoCurrentAnswers(Question q){
-        //TODO
-        //Question temp = getQuestion(q.getId());
-        //int latest = temp.getNoCurrentAnswers();
-        //temp.setNoCurrentAnswers(latest++);
-        //updateQuestion(temp);
+    private void updateNoCurrentAnswers(){
+        int temp = questions.getCurrentQuestion().getNoCorrectAnswers() + 1;
+        String NoCorrectAnswer = "" + temp;
+        String Id = questions.getCurrentQuestion().getID();
+        Update.updateNoCorrectAnswer(Id, NoCorrectAnswer);
     }
 
     private Question getQuestion(String ID){

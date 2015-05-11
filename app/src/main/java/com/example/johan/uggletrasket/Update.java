@@ -2,6 +2,8 @@ package com.example.johan.uggletrasket;
 
 
 
+import android.os.StrictMode;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -25,18 +27,31 @@ public class Update {
 
 
 public static void updateShowtime(String Idnumber, String Showtime){
-    String Id = "" + Idnumber;
-    InputStream is = null;
+
     List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-
-    nameValuePairs.add(new BasicNameValuePair("Id", Id));
+    nameValuePairs.add(new BasicNameValuePair("Id", Idnumber));
     nameValuePairs.add(new BasicNameValuePair("Showtimes", Showtime));
+    update(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateShow.php");
+}
+
+public static void updateNoCorrectAnswer(String Idnumber, String NoCorrectAnswer){
+
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("Id", Idnumber));
+        nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", NoCorrectAnswer));
+        update(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateNoCorrectAnswer.php");
+}
 
 
-    try {
+
+
+public static void update(List<NameValuePair> nameValuePairs, String url){
+    StrictMode.enableDefaults();
+    InputStream is = null;
+        try {
         HttpClient httpClient = new DefaultHttpClient();
 
-        HttpPost httpPost = new HttpPost("http://www.ilmkandidat.byethost7.com/updateShow.php");
+        HttpPost httpPost = new HttpPost(url);
 
         httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -46,7 +61,7 @@ public static void updateShowtime(String Idnumber, String Showtime){
 
         is = entity.getContent();
 
-        String msg = "Data entered succesfully";
+
 
     } catch (ClientProtocolException e) {
         e.printStackTrace();
@@ -58,5 +73,5 @@ public static void updateShowtime(String Idnumber, String Showtime){
 
 }
 
-
 }
+

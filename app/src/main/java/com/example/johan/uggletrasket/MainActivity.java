@@ -45,18 +45,15 @@ public class MainActivity extends ActionBarActivity {
 
         addQuest.setOnClickListener(listAdd);
 
-        View.OnClickListener testUpdate = new View.OnClickListener() {
+        View.OnClickListener statistic = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int temp = (int) Math.floor((Math.random() * 100) + 1);
-                String showtime = "" + temp;
-
-                Update.updateShowtime("d0370868-197b-4b78-88cd-05a3cfed00b3", showtime);
-
+                startActivity(new Intent(MainActivity.this, statistics.class));
             }
         };
 
-        updateButton.setOnClickListener(testUpdate);
+        updateButton.setOnClickListener(statistic);
+
     }
 
     @Override
