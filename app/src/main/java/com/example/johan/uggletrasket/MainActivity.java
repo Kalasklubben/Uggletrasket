@@ -1,6 +1,7 @@
 package com.example.johan.uggletrasket;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +15,10 @@ public class MainActivity extends ActionBarActivity {
 
     //Declaring
     private Button next, addQuest;
-
+    private QuizListFragment dialog;
+    FragmentManager manager;
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +27,8 @@ public class MainActivity extends ActionBarActivity {
 
         //Connect ID to button
         next = (Button) findViewById(R.id.nextButton);
-        addQuest= (Button) findViewById(R.id.addQuestButton);
+        addQuest = (Button) findViewById(R.id.addQuestButton);
+
 
         /*Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
@@ -39,14 +44,13 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
 //                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
 
-                FragmentManager manager = getFragmentManager();
-                QuizListFragment dialog = new QuizListFragment();
+                manager = getFragmentManager();
+                dialog = new QuizListFragment();
                 dialog.show(manager, "dialog");
+
 
             }
         };
-
-
         next.setOnClickListener(listNext);
 
         View.OnClickListener listAdd = new View.OnClickListener() {
@@ -79,4 +83,12 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void checkPassword(Quiz q) {
+
+    }
+
+
+
 }
+
