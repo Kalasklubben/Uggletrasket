@@ -3,14 +3,12 @@ package com.example.johan.uggletrasket;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.app.Activity;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -32,14 +30,6 @@ public class MainActivity extends ActionBarActivity {
         next = (Button) findViewById(R.id.nextButton);
         addQuest= (Button) findViewById(R.id.addQuestButton);
         updateButton = (Button) findViewById(R.id.statistics);
-
-        //Listener for next button
-        View.OnClickListener listNext = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
-            }
-        };
 
         //Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
