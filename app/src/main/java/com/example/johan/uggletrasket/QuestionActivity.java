@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,7 +59,6 @@ public class QuestionActivity extends ActionBarActivity{
             @Override
             public void onClick(View v) {
                updateShowtime();
-
 
                 Button answer = (Button) findViewById(v.getId());
                 questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
@@ -156,7 +157,6 @@ public class QuestionActivity extends ActionBarActivity{
                 correctButtonID = buttonArray[i].getId();
         }
     }
-
 }
 
 

@@ -49,7 +49,7 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener listAdd = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddQuestion.class));
+                startActivity(new Intent(MainActivity.this, AddQuiz.class));
             }
         };
 
@@ -86,4 +86,12 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void checkPassword(Quiz q) {
+
+    }
+
+
+
 }
+

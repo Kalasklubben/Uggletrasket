@@ -3,7 +3,9 @@ package com.example.johan.uggletrasket;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,6 +91,7 @@ public class AddQuestion extends ActionBarActivity {
                     nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
                     nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
                     nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
+                    nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
                     nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
                     nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
                     nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
