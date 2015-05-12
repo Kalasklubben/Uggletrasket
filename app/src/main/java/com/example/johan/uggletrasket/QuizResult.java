@@ -1,6 +1,7 @@
 package com.example.johan.uggletrasket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class QuizResult extends ActionBarActivity {
     QuestionList questions;
     QuizListAdapter qla;
     ListView questionList;
+    Button mainMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,14 @@ public class QuizResult extends ActionBarActivity {
 
         TextView result = (TextView) findViewById(R.id.result);
         questionList = (ListView) findViewById(R.id.question_list);
+        mainMenuButton = (Button) findViewById(R.id.main_menu_return);
+        
+        mainMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(QuizResult.this, MainActivity.class));
+            }
+        });
 
         //retrieves info from another activity (QuestionActivity)
         Bundle extras = getIntent().getExtras();

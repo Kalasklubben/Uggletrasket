@@ -58,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener statistic = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, statistics.class));
+                startActivity(new Intent(MainActivity.this, Statistics.class));
             }
         };
 

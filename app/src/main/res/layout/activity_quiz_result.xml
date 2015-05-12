@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Du är nu klar, här kan du se vad du hade rätt på!"
+            android:text="Finished! Here's a summary of your answers"
             android:textSize="17dp"
             android:id="@+id/initial_message" />
 
@@ -28,6 +28,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/question_list" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Return to main menu"
+            android:id="@+id/main_menu_return" />
 
 
     </LinearLayout>

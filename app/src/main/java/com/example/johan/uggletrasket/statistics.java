@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
 
 
 
-public class statistics extends Activity {
+public class Statistics extends Activity {
     /** Called when the activity is first created. */
 
     TextView resultView;

@@ -35,7 +35,7 @@
             android:label="AddQuiz"/>
         
         <activity
-            android:name=".statistics"
+            android:name=".Statistics"
             android:label="@string/title_activity_statistics" >
         </activity>
     </application>
