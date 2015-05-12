@@ -55,6 +55,7 @@ public class QuizListFragment extends DialogFragment{
                     Intent i = new Intent(getActivity(), QuestionActivity.class);
                     i.putExtra("quizId", quizId);
                     startActivity(i);
+                   // getDialog().dismiss();
             }
         });
 

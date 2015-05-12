@@ -39,7 +39,7 @@ public class QuizResult extends ActionBarActivity {
             questions.resetCursor();
         }
 
-        result.setText("Resultat " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
+        result.setText("Result " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
         populateQuestionListView();
 
         };

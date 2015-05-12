@@ -14,7 +14,7 @@ import android.widget.Button;
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next, addQuest, updateButton;
+    private Button next, addQuizButton, statsButton;
     private QuizListFragment dialog;
     FragmentManager manager;
     FragmentManager fragmentManager;
@@ -27,9 +27,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //Connect ID to button
-        next = (Button) findViewById(R.id.nextButton);
-        addQuest= (Button) findViewById(R.id.addQuestButton);
-        updateButton = (Button) findViewById(R.id.statistics);
+        next = (Button) findViewById(R.id.answerButton);
+        addQuizButton= (Button) findViewById(R.id.addQuestButton);
+        statsButton = (Button) findViewById(R.id.statistics);
 
         //Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
-        addQuest.setOnClickListener(listAdd);
+        addQuizButton.setOnClickListener(listAdd);
 
         View.OnClickListener statistic = new View.OnClickListener() {
             @Override
@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
             }
         };
 
-        updateButton.setOnClickListener(statistic);
+        statsButton.setOnClickListener(statistic);
 
     }
 
