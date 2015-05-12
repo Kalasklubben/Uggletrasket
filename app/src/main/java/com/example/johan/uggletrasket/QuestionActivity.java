@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+
 
 /**
  * Created by David on 27/04/2015.
@@ -25,6 +27,7 @@ public class QuestionActivity extends ActionBarActivity{
     private QuestionList questions;
     private int correctButtonID;
     private int correctAnswers = 0, wrongAnswers = 0;
+    InputStream is = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +58,7 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               updateShowtime();
 
 
                 Button answer = (Button) findViewById(v.getId());
@@ -62,6 +66,7 @@ public class QuestionActivity extends ActionBarActivity{
 
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
+                    updateNoCurrentAnswers();
                 } else {
                     vibe.vibrate(80);
                     wrongAnswers++;
@@ -74,11 +79,11 @@ public class QuestionActivity extends ActionBarActivity{
                     i.putExtra("wrong", wrongAnswers);
                     i.putExtra("questions", questions);
 
-                    uploadAnswers();
                     startActivity(i);
                 } else {
                     displayQuestion(questions.getNext());
                 }
+
             }
         };
 
@@ -105,20 +110,20 @@ public class QuestionActivity extends ActionBarActivity{
         }
     }
 
-    private void updateShowtime(Question q){
-        //TODO
-        //Question temp = getQuestion(q.getId()));
-        //int latest = temp.getShowTimes());
-        //temp.setShowTimes(latest++);
-        //updateQuestion(temp);
+    private void updateShowtime(){
+        int temp = questions.getCurrentQuestion().getShowTimes() + 1;
+        String showtime = "" + temp;
+        String Id = questions.getCurrentQuestion().getID();
+        Update.updateShowtime(Id, showtime);
+
+
     }
 
-    private void updateNoCurrentAnswers(Question q){
-        //TODO
-        //Question temp = getQuestion(q.getId());
-        //int latest = temp.getNoCurrentAnswers();
-        //temp.setNoCurrentAnswers(latest++);
-        //updateQuestion(temp);
+    private void updateNoCurrentAnswers(){
+        int temp = questions.getCurrentQuestion().getNoCorrectAnswers() + 1;
+        String NoCorrectAnswer = "" + temp;
+        String Id = questions.getCurrentQuestion().getID();
+        Update.updateNoCorrectAnswer(Id, NoCorrectAnswer);
     }
 
     private Question getQuestion(String ID){
@@ -153,6 +158,7 @@ public class QuestionActivity extends ActionBarActivity{
                 correctButtonID = buttonArray[i].getId();
         }
     }
+
 }
 
 

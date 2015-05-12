@@ -1,10 +1,9 @@
 package com.example.johan.uggletrasket;
 
 import android.content.Intent;
-import android.os.StrictMode;
-import android.os.SystemClock;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,7 +33,7 @@ public class AddQuestion extends ActionBarActivity {
 
     EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
     Button bSubmit, bBack;
-    private int noQuestions = 0;
+    int noQuestions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +89,8 @@ public class AddQuestion extends ActionBarActivity {
                     nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
                     nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
                     nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
-                    nameValuePairs.add(new BasicNameValuePair("Showtimes", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
                     nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
 
                     try {
