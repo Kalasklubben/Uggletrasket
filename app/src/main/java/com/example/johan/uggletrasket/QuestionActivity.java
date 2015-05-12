@@ -11,8 +11,35 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by David on 27/04/2015.
@@ -25,6 +52,7 @@ public class QuestionActivity extends ActionBarActivity{
     private QuestionList questions;
     private int correctButtonID;
     private int correctAnswers = 0, wrongAnswers = 0;
+    InputStream is = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +83,7 @@ public class QuestionActivity extends ActionBarActivity{
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               updateShowtime();
 
 
                 Button answer = (Button) findViewById(v.getId());
@@ -62,6 +91,7 @@ public class QuestionActivity extends ActionBarActivity{
 
                 if (v.getId() == correctButtonID) {
                     correctAnswers++;
+                    updateNoCurrentAnswers();
                 } else {
                     vibe.vibrate(80);
                     wrongAnswers++;
@@ -74,11 +104,12 @@ public class QuestionActivity extends ActionBarActivity{
                     i.putExtra("wrong", wrongAnswers);
                     i.putExtra("questions", questions);
 
-                    uploadAnswers();
+                    //uploadAnswers();
                     startActivity(i);
                 } else {
                     displayQuestion(questions.getNext());
                 }
+
             }
         };
 
@@ -98,27 +129,26 @@ public class QuestionActivity extends ActionBarActivity{
         for(int i = 0; i < questions.getSize(); i++){
             Question temp = questions.getNext();
             if(temp.getAnswer()== temp.getUserAnswer()) {
-                updateNoCurrentAnswers(temp);
-                updateShowtime(temp);
-            }else
-                updateShowtime(temp);
+                //updateNoCurrentAnswers(temp);
+
+            }
         }
     }
 
-    private void updateShowtime(Question q){
-        //TODO
-        //Question temp = getQuestion(q.getId()));
-        //int latest = temp.getShowTimes());
-        //temp.setShowTimes(latest++);
-        //updateQuestion(temp);
+    private void updateShowtime(){
+        int temp = questions.getCurrentQuestion().getShowTimes() + 1;
+        String showtime = "" + temp;
+        String Id = questions.getCurrentQuestion().getID();
+        Update.updateShowtime(Id, showtime);
+
+
     }
 
-    private void updateNoCurrentAnswers(Question q){
-        //TODO
-        //Question temp = getQuestion(q.getId());
-        //int latest = temp.getNoCurrentAnswers();
-        //temp.setNoCurrentAnswers(latest++);
-        //updateQuestion(temp);
+    private void updateNoCurrentAnswers(){
+        int temp = questions.getCurrentQuestion().getNoCorrectAnswers() + 1;
+        String NoCorrectAnswer = "" + temp;
+        String Id = questions.getCurrentQuestion().getID();
+        Update.updateNoCorrectAnswer(Id, NoCorrectAnswer);
     }
 
     private Question getQuestion(String ID){
@@ -153,6 +183,7 @@ public class QuestionActivity extends ActionBarActivity{
                 correctButtonID = buttonArray[i].getId();
         }
     }
+
 }
 
 

@@ -14,11 +14,12 @@ import android.widget.Button;
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next, addQuest;
+    private Button next, addQuest, updateButton;
     private QuizListFragment dialog;
     FragmentManager manager;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,8 @@ public class MainActivity extends ActionBarActivity {
 
         //Connect ID to button
         next = (Button) findViewById(R.id.nextButton);
-        addQuest = (Button) findViewById(R.id.addQuestButton);
+        addQuest= (Button) findViewById(R.id.addQuestButton);
+        updateButton = (Button) findViewById(R.id.statistics);
 
 
         /*Listener for next button
@@ -61,6 +63,16 @@ public class MainActivity extends ActionBarActivity {
         };
 
         addQuest.setOnClickListener(listAdd);
+
+        View.OnClickListener statistic = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, statistics.class));
+            }
+        };
+
+        updateButton.setOnClickListener(statistic);
+
     }
 
     @Override
@@ -83,12 +95,5 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    public void checkPassword(Quiz q) {
-
-    }
-
-
-
 }
 

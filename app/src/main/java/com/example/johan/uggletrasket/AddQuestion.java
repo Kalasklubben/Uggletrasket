@@ -90,9 +90,9 @@ public class AddQuestion extends ActionBarActivity {
                     nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
                     nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
                     nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
-                    nameValuePairs.add(new BasicNameValuePair("Showtimes", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", "0"));
                     nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
+                    nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
+                    nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
 
                     try {
                         HttpClient httpClient = new DefaultHttpClient();
