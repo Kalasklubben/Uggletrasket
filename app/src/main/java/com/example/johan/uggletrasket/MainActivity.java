@@ -14,7 +14,7 @@ import android.widget.Button;
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next, addQuizButton, statsButton;
+    private Button answer, addQuizButton, statsButton;
     private QuizListFragment dialog;
     FragmentManager manager;
     FragmentManager fragmentManager;
@@ -27,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //Connect ID to button
-        next = (Button) findViewById(R.id.answerButton);
+        answer = (Button) findViewById(R.id.answerButton);
         addQuizButton= (Button) findViewById(R.id.addQuestButton);
         statsButton = (Button) findViewById(R.id.statistics);
 
@@ -38,13 +38,13 @@ public class MainActivity extends ActionBarActivity {
 //                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
 
                 manager = getFragmentManager();
-                dialog = new QuizListFragment();
+                dialog = new QuizListFragment("");
                 dialog.show(manager, "dialog");
 
 
             }
         };
-        next.setOnClickListener(listNext);
+        answer.setOnClickListener(listNext);
 
         View.OnClickListener listAdd = new View.OnClickListener() {
             @Override
@@ -58,7 +58,11 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener statistic = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Statistics.class));
+               // startActivity(new Intent(MainActivity.this, Statistics.class));
+
+                manager = getFragmentManager();
+                dialog = new QuizListFragment("STAT");
+                dialog.show(manager, "dialog");
             }
         };
 

@@ -66,8 +66,6 @@ public class LoadQuestions {
                 temp.setQuestion(json.getString("Question"));
                 temp.setAnswer(json.getString("Correct"));
                 temp.setID(json.getString("Id"));
-
-                //TODO
                 temp.setNoCorrectAnswers(Integer.parseInt(json.getString("NoCorrectAnswer")));
                 temp.setShowTimes(Integer.parseInt(json.getString("Showtimes")));
 

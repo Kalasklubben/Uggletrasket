@@ -30,6 +30,11 @@ public class QuizListFragment extends DialogFragment{
     QuizListAdapter qla;
     String quizId, quizPassword, userPassword;
     Button backButton, startButton;
+    String choice ="";
+
+    public QuizListFragment(String s){
+        choice = s;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,9 +57,15 @@ public class QuizListFragment extends DialogFragment{
             @Override
             public void onClick(View v) {
 
-                    Intent i = new Intent(getActivity(), QuestionActivity.class);
-                    i.putExtra("quizId", quizId);
-                    startActivity(i);
+                    if(choice=="STAT") {
+                        Intent i = new Intent(getActivity(), Statistics.class);
+                        i.putExtra("quizId", quizId);
+                        startActivity(i);
+                    }else {
+                        Intent i = new Intent(getActivity(), QuestionActivity.class);
+                        i.putExtra("quizId", quizId);
+                        startActivity(i);
+                    }
                    // getDialog().dismiss();
             }
         });

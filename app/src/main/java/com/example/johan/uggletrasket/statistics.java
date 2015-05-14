@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import java.text.DecimalFormat;
 
 
 public class Statistics extends Activity {
@@ -26,7 +26,10 @@ public class Statistics extends Activity {
 
     TextView resultView;
     ScrollView mScrollView;
-    @Override
+    String quizID = "";
+    QuestionList ql;
+            
+;    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
@@ -34,64 +37,28 @@ public class Statistics extends Activity {
 
         resultView= (TextView) findViewById(R.id.result);
 
-
-
-        getData();
-
+        //Get quizID
+        Bundle quizInfo = getIntent().getExtras();
+        if(quizInfo != null) {
+            quizID = quizInfo.getString("quizId");
+        }
+        
+        ql =  LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizID);
+        printResult();
+        
     }
 
-
-
-    public void getData(){
-        String result = "";
-        InputStream isr = null;
-        try{
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://www.ilmkandidat.byethost7.com/getQuestions.php"); //YOUR PHP SCRIPT ADDRESS
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-            isr = entity.getContent();
+    private void printResult() {
+        String output = "The result of choosen quiz:\n";
+        while(!ql.endOfList()){
+            Question temp = ql.getNext();
+            double perc = (double)temp.getNoCorrectAnswers()/(double)temp.getShowTimes();
+            perc = perc*100;
+            DecimalFormat df = new DecimalFormat("0.00");
+            output = (output + "\nQuestion: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n");
         }
-        catch(Exception e){
-            Log.e("log_tag", "Error in http connection " + e.toString());
-            resultView.setText("Couldnt connect to database");
-        }
-        //convert response to string
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            isr.close();
-
-            result=sb.toString();
-        }
-        catch(Exception e){
-            Log.e("log_tag", "Error  converting result "+e.toString());
-        }
-
-        //parse json data
-        try {
-            String s = "";
-            JSONArray jArray = new JSONArray(result);
-
-            for(int i=0; i<jArray.length();i++){
-                JSONObject json = jArray.getJSONObject(i);
-                s = s +
-                        // "Uppgifter : "+json.getString("ID")+" "+json.getString("Name")+"\n";
-
-                        json.getString("Question")+"\n" + "Answers:  " +json.getString("Showtimes") + "\n" + "Right answers:  " +json.getString("NoCorrectAnswer") + "\n" +"\n";
-            }
-
-            resultView.setText(s);
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            Log.e("log_tag", "Error Parsing Data "+e.toString());
-        }
-
+        resultView.setText(output);
     }
+
 
 }
