@@ -4,10 +4,10 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-
-    >
+    style="@style/backGround">
 
     <LinearLayout
+
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
@@ -39,22 +39,24 @@
                 android:orientation="vertical">
 
                 <Button
-                android:text="Start a quiz"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/answerButton"
-                />
-
-            <Button
-                    android:text="Add a quiz"
-                    android:layout_width="150dp"
+                    style="@style/HomeScreenButtonStyle"
                     android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:text="Start a quiz"
+                    android:id="@+id/answerButton"/>
+
+                <Button
+                    style="@style/HomeScreenButtonStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:text="Add a quiz"
                     android:id="@+id/addQuestButton"/>
 
                 <Button
-                    android:text="Statistics"
-                    android:layout_width="150dp"
+                    style="@style/HomeScreenButtonStyle"
                     android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:text="Statistics"
                     android:id="@+id/statistics"/>
 
             </LinearLayout>
@@ -71,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="italic"
             android:text="\n\n''Never confuse a single failure with a final defeat.''\n - David Kron"
             android:layout_gravity="center_horizontal"
             android:gravity="center"
@@ -78,6 +81,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="italic"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="\n''You may have won the battle but not the war''\n - Johan Nordholts"
             android:layout_gravity="center_horizontal"

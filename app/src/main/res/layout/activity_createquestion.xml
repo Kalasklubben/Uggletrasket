@@ -101,15 +101,19 @@
             android:orientation="horizontal">
 
             <Button
+                style="@style/HomeScreenButtonStyle"
                 android:id="@+id/backButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Back"/>
 
             <Button
+                style="@style/HomeScreenButtonStyle"
                 android:id="@+id/createQuestionButton"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:text="Create"/>
 
         </LinearLayout>
