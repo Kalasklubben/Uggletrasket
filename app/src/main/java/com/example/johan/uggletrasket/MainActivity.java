@@ -18,7 +18,6 @@ public class MainActivity extends ActionBarActivity {
     private QuizListFragment dialogOne;
     private AddToQuizFragment dialogTwo;
     FragmentManager manager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +35,8 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener listNextListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                dialogOne = new QuizListFragment();
+                
+                dialogOne = new QuizListFragment("");
                 dialogOne.show(manager, "dialog");
             }
         };
@@ -54,7 +53,10 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener statisticListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Statistics.class));
+               // startActivity(new Intent(MainActivity.this, Statistics.class));
+
+                dialogOne = new QuizListFragment("STAT");
+                dialogOne.show(manager, "dialog");
             }
         };
         statsButton.setOnClickListener(statisticListener);

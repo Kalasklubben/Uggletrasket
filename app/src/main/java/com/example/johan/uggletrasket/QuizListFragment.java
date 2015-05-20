@@ -30,6 +30,11 @@ public class QuizListFragment extends DialogFragment{
     QuizListAdapter qla;
     String quizId, quizPassword, userPassword;
     Button backButton;
+    String choice ="";
+
+    public QuizListFragment(String s){
+        choice = s;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,6 +60,7 @@ public class QuizListFragment extends DialogFragment{
 
         return v;
     }
+
 
     private void populateQuizListView(){
         qla = new QuizListAdapter(getActivity());
@@ -112,9 +118,15 @@ public class QuizListFragment extends DialogFragment{
                 public void onClick(DialogInterface dialog, int whichButton) {
                     userPassword = input.getText().toString();
                     if (isPasswordCorrect(userPassword, quizPassword)) {
-                        Intent i = new Intent(getActivity().getApplicationContext(), QuestionActivity.class);
-                        i.putExtra("quizId", quizId);
-                        startActivity(i);
+                        if(choice=="STAT") {
+                            Intent i = new Intent(getActivity(), Statistics.class);
+                            i.putExtra("quizId", quizId);
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getActivity(), QuestionActivity.class);
+                            i.putExtra("quizId", quizId);
+                            startActivity(i);
+                        }
                         killFragment();
                     } else {
                         Toast.makeText(getActivity(), "Incorrect password!", Toast.LENGTH_SHORT).show();
