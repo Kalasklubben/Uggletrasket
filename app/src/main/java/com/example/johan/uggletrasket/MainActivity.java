@@ -9,12 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next, addQuizButton, statsButton;
+    private ImageButton next, addQuizButton, statsButton;
     private QuizListFragment dialog;
     FragmentManager manager;
     FragmentManager fragmentManager;
@@ -27,9 +28,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //Connect ID to button
-        next = (Button) findViewById(R.id.answerButton);
-        addQuizButton= (Button) findViewById(R.id.addQuestButton);
-        statsButton = (Button) findViewById(R.id.statistics);
+        next = (ImageButton) findViewById(R.id.answerButton);
+        addQuizButton= (ImageButton) findViewById(R.id.addQuestButton);
+        statsButton = (ImageButton) findViewById(R.id.statistics);
 
         //Listener for next button
         View.OnClickListener listNext = new View.OnClickListener() {
