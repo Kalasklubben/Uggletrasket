@@ -7,10 +7,15 @@
     android:layout_marginRight="5dp"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="@android:color/black" />
+
     <ListView
         android:id="@+id/quiz_list_in_fragment"
         android:layout_width="match_parent"
-        android:layout_height="400dp" >
+        android:layout_height="300dp" >
     </ListView>
 
     <LinearLayout
@@ -22,17 +27,10 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tillbaka"
+            android:text="Cancel"
             android:id="@+id/quiz_list_back_button"
             android:onClick="onButtonClick"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Starta quiz"
-            android:id="@+id/quiz_list_start_button"
-            android:onClick="onButtonClick"
-            android:clickable="false" />
     </LinearLayout>
 
 </LinearLayout>

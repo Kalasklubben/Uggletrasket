@@ -1,6 +1,7 @@
 package com.example.johan.uggletrasket;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -34,13 +35,8 @@ public class Statistics extends Activity {
 
         resultView= (TextView) findViewById(R.id.result);
 
-
-
         getData();
-
     }
-
-
 
     public void getData(){
         String result = "";
@@ -91,7 +87,9 @@ public class Statistics extends Activity {
             // TODO: handle exception
             Log.e("log_tag", "Error Parsing Data "+e.toString());
         }
-
     }
 
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+    }
 }
