@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ public class Statistics extends Activity {
     /** Called when the activity is first created. */
 
     TextView resultView;
-    private Button returnButton;
+    private ImageButton returnButton;
     ScrollView mScrollView;
     String quizID = "";
     QuestionList ql;
@@ -28,7 +29,7 @@ public class Statistics extends Activity {
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
         resultView = (TextView) findViewById(R.id.result);
-        returnButton = (Button) findViewById(R.id.returnStatsButton);
+        returnButton = (ImageButton) findViewById(R.id.return_stats_button);
 
         //Get quizID
         Bundle quizInfo = getIntent().getExtras();

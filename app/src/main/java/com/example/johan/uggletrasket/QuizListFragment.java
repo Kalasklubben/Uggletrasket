@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class QuizListFragment extends DialogFragment{
     ListView quizListView;
     QuizListAdapter qla;
     String quizId, quizPassword, userPassword;
-    Button backButton;
+    ImageButton backButton;
     String choice ="";
 
     public QuizListFragment(String s){
@@ -42,7 +43,7 @@ public class QuizListFragment extends DialogFragment{
 
         View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
         quizListView = (ListView) v.findViewById(R.id.quiz_list_in_fragment);
-        backButton = (Button) v.findViewById(R.id.quiz_list_back_button);
+        backButton = (ImageButton) v.findViewById(R.id.quiz_list_back_button);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override

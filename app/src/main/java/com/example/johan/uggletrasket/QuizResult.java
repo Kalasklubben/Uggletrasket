@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ public class QuizResult extends ActionBarActivity {
     QuestionList questions;
     QuizListAdapter qla;
     ListView questionList;
-    Button mainMenuButton;
+    ImageButton mainMenuButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +33,7 @@ public class QuizResult extends ActionBarActivity {
 
         TextView result = (TextView) findViewById(R.id.result);
         questionList = (ListView) findViewById(R.id.question_list);
-        mainMenuButton = (Button) findViewById(R.id.main_menu_return);
+        mainMenuButton = (ImageButton) findViewById(R.id.main_menu_return);
         
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override

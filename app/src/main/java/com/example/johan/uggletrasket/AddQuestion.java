@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -30,7 +31,7 @@ import java.util.UUID;
 public class AddQuestion extends ActionBarActivity {
 
     EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
-    Button bSubmit, bBack;
+    ImageButton bSubmit, bBack;
     int noQuestions;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,8 @@ public class AddQuestion extends ActionBarActivity {
         editWrong2 = (EditText) findViewById(R.id.wrong2);
         editWrong3 = (EditText) findViewById(R.id.wrong3);
 
-        bSubmit = (Button) findViewById(R.id.button);
-        bBack = (Button) findViewById(R.id.backButton);
+        bSubmit = (ImageButton) findViewById(R.id.createButton);
+        bBack = (ImageButton) findViewById(R.id.cancelButton);
 
         View.OnClickListener backList = new View.OnClickListener() {
             @Override

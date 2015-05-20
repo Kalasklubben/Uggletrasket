@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -33,7 +34,7 @@ import java.util.UUID;
 public class AddQuiz extends ActionBarActivity {
 
     EditText quizName, password;
-    Button create, cancel;
+    ImageButton create, cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +48,8 @@ public class AddQuiz extends ActionBarActivity {
 
         quizName = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
-        create = (Button) findViewById(R.id.createButton);
-        cancel = (Button) findViewById(R.id.cancelButton);
+        create = (ImageButton) findViewById(R.id.createButton);
+        cancel = (ImageButton) findViewById(R.id.cancelButton);
 
         //Go back to the main screen if cancel button is clicked.
         View.OnClickListener cancelListener = new View.OnClickListener() {
