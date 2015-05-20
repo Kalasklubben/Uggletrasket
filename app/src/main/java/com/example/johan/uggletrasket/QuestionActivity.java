@@ -1,17 +1,15 @@
 package com.example.johan.uggletrasket;
 
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +31,6 @@ public class QuestionActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        final Vibrator vibe = (Vibrator) QuestionActivity.this.getSystemService(Context.VIBRATOR_SERVICE);
 
         //Alex code
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
@@ -67,7 +64,6 @@ public class QuestionActivity extends ActionBarActivity{
                     correctAnswers++;
                     updateNoCurrentAnswers();
                 } else {
-                    vibe.vibrate(80);
                     wrongAnswers++;
                 }
                 //if there are no more questions, sends data containing number of correct answer
@@ -156,6 +152,27 @@ public class QuestionActivity extends ActionBarActivity{
             if(buttonArray[i].getText() == question.getAnswer())
                 correctButtonID = buttonArray[i].getId();
         }
+    }
+
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Do you want to exit the quiz?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(QuestionActivity.this, MainActivity.class));
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }
 

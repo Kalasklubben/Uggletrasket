@@ -52,8 +52,7 @@ public class QuizResult extends ActionBarActivity {
 
         result.setText("Result " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
         populateQuestionListView();
-
-        };
+        }
 
     // Adds all questions from an array of questions to the list view in the result activity
     // using the QuizListAdapter for every Question object
@@ -107,4 +106,7 @@ public class QuizResult extends ActionBarActivity {
         }
     }
 
+    public void onBackPressed() {
+        startActivity(new Intent(QuizResult.this, MainActivity.class));
+    }
 }

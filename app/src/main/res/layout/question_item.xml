@@ -51,10 +51,5 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/quiz_item_correct_answer" />
         </LinearLayout>
-
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:background="@android:color/black" />
     </LinearLayout>
 </LinearLayout>

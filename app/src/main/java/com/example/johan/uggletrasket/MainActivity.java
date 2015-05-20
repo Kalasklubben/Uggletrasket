@@ -1,7 +1,8 @@
 package com.example.johan.uggletrasket;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,17 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private ImageButton next, addQuizButton, statsButton;
-    private QuizListFragment dialog;
+
+    private ImageButton next, addQuizButton, statsButton, editQuizButton;
+    private QuizListFragment dialogOne;
+    private AddToQuizFragment dialogTwo;
     FragmentManager manager;
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,40 +29,48 @@ public class MainActivity extends ActionBarActivity {
         next = (ImageButton) findViewById(R.id.answerButton);
         addQuizButton= (ImageButton) findViewById(R.id.addQuestButton);
         statsButton = (ImageButton) findViewById(R.id.statistics);
+        editQuizButton = (ImageButton) findViewById(R.id.editQuizButton);
+
+        manager = getFragmentManager();
 
         //Listener for next button
-        View.OnClickListener listNext = new View.OnClickListener() {
+        View.OnClickListener listNextListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startActivity(new Intent(MainActivity.this, QuestionActivity.class));
-
-                manager = getFragmentManager();
-                dialog = new QuizListFragment();
-                dialog.show(manager, "dialog");
-
-
+                
+                dialogOne = new QuizListFragment("");
+                dialogOne.show(manager, "dialog");
             }
         };
-        next.setOnClickListener(listNext);
+        next.setOnClickListener(listNextListener);
 
-        View.OnClickListener listAdd = new View.OnClickListener() {
+        View.OnClickListener listAddListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddQuiz.class));
             }
         };
+        addQuizButton.setOnClickListener(listAddListener);
 
-        addQuizButton.setOnClickListener(listAdd);
-
-        View.OnClickListener statistic = new View.OnClickListener() {
+        View.OnClickListener statisticListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Statistics.class));
+               // startActivity(new Intent(MainActivity.this, Statistics.class));
+
+                dialogOne = new QuizListFragment("STAT");
+                dialogOne.show(manager, "dialog");
             }
         };
+        statsButton.setOnClickListener(statisticListener);
 
-        statsButton.setOnClickListener(statistic);
-
+        View.OnClickListener editButtonListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogTwo = new AddToQuizFragment();
+                dialogTwo.show(manager, "dialog");
+            }
+        };
+        editQuizButton.setOnClickListener(editButtonListener);
     }
 
     @Override
@@ -88,11 +94,25 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void checkPassword(Quiz q) {
-
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setMessage("Exit app?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                System.exit(0);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //if user select "No", just cancel this dialog and continue with app
+                dialog.cancel();
+            }
+        });
+        AlertDialog alert = builder.create();
+        alert.show();
     }
-
-
-
 }
 

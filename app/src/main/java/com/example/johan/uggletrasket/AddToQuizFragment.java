@@ -23,18 +23,13 @@ import android.widget.Toast;
  * Created by JohanN on 09/05/15.
  */
 
-public class QuizListFragment extends DialogFragment{
+public class AddToQuizFragment extends DialogFragment{
 
     QuizList quizzes;
     ListView quizListView;
     QuizListAdapter qla;
-    String quizId, quizPassword, userPassword;
+    String quizName, quizId, quizPassword, userPassword;
     Button backButton;
-    String choice ="";
-
-    public QuizListFragment(String s){
-        choice = s;
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +55,6 @@ public class QuizListFragment extends DialogFragment{
 
         return v;
     }
-
 
     private void populateQuizListView(){
         qla = new QuizListAdapter(getActivity());
@@ -94,11 +88,9 @@ public class QuizListFragment extends DialogFragment{
 
             // Fetching the views of the layout
             TextView quizName = (TextView) convertView.findViewById(R.id.quiz_list_quiz_name);
-            //TextView noQuestions = (TextView) convertView.findViewById(R.id.quiz_list_no_questions);
 
             // Populate the data into the template layout (quiz_item)
             quizName.setHint(getItem(position).getName());
-            //noQuestions.setHint(getItem(position).getNoQuestions());
 
             return convertView;
         }
@@ -110,6 +102,10 @@ public class QuizListFragment extends DialogFragment{
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             Quiz selectedQuiz = (Quiz) (quizListView.getItemAtPosition(position));
 
+            quizId = selectedQuiz.getID();
+            quizName = selectedQuiz.getName();
+            quizPassword = selectedQuiz.getPassword();
+
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Enter password");
             final EditText input = new EditText(getActivity());
@@ -118,20 +114,14 @@ public class QuizListFragment extends DialogFragment{
                 public void onClick(DialogInterface dialog, int whichButton) {
                     userPassword = input.getText().toString();
                     if (isPasswordCorrect(userPassword, quizPassword)) {
-                        if(choice=="STAT") {
-                            Intent i = new Intent(getActivity(), Statistics.class);
-                            i.putExtra("quizId", quizId);
-                            startActivity(i);
-                        }else {
-                            Intent i = new Intent(getActivity(), QuestionActivity.class);
-                            i.putExtra("quizId", quizId);
-                            startActivity(i);
-                        }
+                        Intent i = new Intent(getActivity().getApplicationContext(), AddQuestion.class);
+                        i.putExtra("quizId", quizId);
+                        i.putExtra("quizName", quizName);
+                        startActivity(i);
                         killFragment();
                     } else {
                         Toast.makeText(getActivity(), "Incorrect password!", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             });
 
@@ -144,8 +134,7 @@ public class QuizListFragment extends DialogFragment{
             alert.show();
 
 
-            quizId = selectedQuiz.getID();
-            quizPassword = selectedQuiz.getPassword();
+
         }
     }
 
