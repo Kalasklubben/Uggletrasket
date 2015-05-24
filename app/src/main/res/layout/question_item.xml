@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="20dp">
 
 
     <LinearLayout
@@ -30,7 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Your answer: "
-                android:textColor="@android:color/holo_blue_dark"
+                android:textStyle="bold"
+                android:textColor="#ff000000"
                 android:id="@+id/quiz_item_answer_hint" />
 
             <TextView
@@ -48,9 +51,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Correct answer: "
-                android:textColor="@android:color/holo_green_dark"
-                android:id="@+id/quiz_item_correct_answer_hint"
-                android:layout_marginBottom="5dp" />
+
+                android:textColor="#ff039b07"
+                android:id="@+id/quiz_item_correct_answer_hint" />
+
 
             <TextView
                 android:layout_width="wrap_content"

@@ -57,8 +57,7 @@ public class QuizListFragment extends DialogFragment{
         this.quizzes = LoadQuizzes.getData(getResources().getString(R.string.getAllQuizzes));
 
         populateQuizListView();
-        getDialog().setTitle("Choose quiz!");
-
+        getDialog().setTitle("Choose quiz:");
         return v;
     }
 

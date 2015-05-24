@@ -52,6 +52,7 @@ public class QuestionActivity extends ActionBarActivity{
         questionView = (TextView) findViewById(R.id.question);
 
         //Listener for buttons
+        final String finalQuizId = quizId;
         View.OnClickListener list = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,6 +74,8 @@ public class QuestionActivity extends ActionBarActivity{
                     i.putExtra("correct", correctAnswers);
                     i.putExtra("wrong", wrongAnswers);
                     i.putExtra("questions", questions);
+                    i.putExtra("showRes",1);
+                    i.putExtra("ID", finalQuizId);
 
                     startActivity(i);
                 } else {

@@ -21,8 +21,8 @@
                 android:layout_height="match_parent"
                 android:layout_width="match_parent"
                 android:layout_weight="1"
-                android:src="@drawable/play105"
-                android:background="#ff1a1cff"
+                android:src="@drawable/play106"
+                android:background="#7d191cff"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/answerButton">
@@ -32,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/add13"
-                android:background="#ff07ff17"
+                android:background="#7f07ff17"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/addQuestButton">
@@ -51,7 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/chart47"
-                android:background="#ffff0c2c"
+                android:background="#81ff0517"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/statistics">
@@ -61,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_weight="1"
                 android:src="@drawable/pencil124"
-                android:background="#fffffb17"
+                android:background="#7efffb17"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
                 android:id="@+id/editQuizButton">
