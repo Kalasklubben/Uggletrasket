@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -16,7 +17,8 @@ public class Statistics extends Activity {
     /** Called when the activity is first created. */
 
     TextView resultView;
-    private Button returnButton;
+    TextView header;
+    private ImageButton returnButton;
     ScrollView mScrollView;
     String quizID = "";
     QuestionList ql;
@@ -28,7 +30,8 @@ public class Statistics extends Activity {
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
         resultView = (TextView) findViewById(R.id.result);
-        returnButton = (Button) findViewById(R.id.returnStatsButton);
+        header = (TextView) findViewById(R.id.header);
+        returnButton = (ImageButton) findViewById(R.id.return_stats_button);
 
         //Get quizID
         Bundle quizInfo = getIntent().getExtras();
@@ -43,6 +46,7 @@ public class Statistics extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Statistics.this, MainActivity.class));
+                overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
 
@@ -51,7 +55,8 @@ public class Statistics extends Activity {
     }
 
     private void printResult() {
-        String output = "The result of choosen quiz:\n";
+        //String output = "The result of choosen quiz:\n";
+        String output = "";
         while(!ql.endOfList()){
             Question temp = ql.getNext();
             double perc;
@@ -64,6 +69,7 @@ public class Statistics extends Activity {
             perc = perc*100;
             DecimalFormat df = new DecimalFormat("0.00");
             output = (output + "\nQuestion: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n");
+            //output = "Question: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n";
         }
         resultView.setText(output);
     }

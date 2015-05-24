@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,8 +29,8 @@ public class QuizListFragment extends DialogFragment{
     QuizList quizzes;
     ListView quizListView;
     QuizListAdapter qla;
-    String quizId, quizPassword, userPassword;
-    Button backButton;
+    String quizId, quizName, quizPassword, userPassword;
+    ImageButton backButton;
     String choice ="";
 
     public QuizListFragment(String s){
@@ -42,7 +43,7 @@ public class QuizListFragment extends DialogFragment{
 
         View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
         quizListView = (ListView) v.findViewById(R.id.quiz_list_in_fragment);
-        backButton = (Button) v.findViewById(R.id.quiz_list_back_button);
+        backButton = (ImageButton) v.findViewById(R.id.quiz_list_back_button);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,8 +57,7 @@ public class QuizListFragment extends DialogFragment{
         this.quizzes = LoadQuizzes.getData(getResources().getString(R.string.getAllQuizzes));
 
         populateQuizListView();
-        getDialog().setTitle("Choose quiz!");
-
+        getDialog().setTitle("Choose quiz:");
         return v;
     }
 
@@ -110,22 +110,34 @@ public class QuizListFragment extends DialogFragment{
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             Quiz selectedQuiz = (Quiz) (quizListView.getItemAtPosition(position));
 
+            quizId = selectedQuiz.getID();
+            quizName = selectedQuiz.getName();
+            quizPassword = selectedQuiz.getPassword();
+
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Enter password");
             final EditText input = new EditText(getActivity());
             alert.setView(input);
+            alert.setIcon(R.drawable.locked58);
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     userPassword = input.getText().toString();
                     if (isPasswordCorrect(userPassword, quizPassword)) {
-                        if(choice=="STAT") {
+                        if (choice == "STAT") {
                             Intent i = new Intent(getActivity(), Statistics.class);
                             i.putExtra("quizId", quizId);
                             startActivity(i);
+                        }else if (choice == "EDIT") {
+                            Intent i = new Intent(getActivity().getApplicationContext(), AddQuestion.class);
+                            i.putExtra("quizId", quizId);
+                            i.putExtra("quizName", quizName);
+                            startActivity(i);
+                            killFragment();
                         }else {
                             Intent i = new Intent(getActivity(), QuestionActivity.class);
                             i.putExtra("quizId", quizId);
                             startActivity(i);
+
                         }
                         killFragment();
                     } else {
@@ -146,6 +158,7 @@ public class QuizListFragment extends DialogFragment{
 
             quizId = selectedQuiz.getID();
             quizPassword = selectedQuiz.getPassword();
+
         }
     }
 

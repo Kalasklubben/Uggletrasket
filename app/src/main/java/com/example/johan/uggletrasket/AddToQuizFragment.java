@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ public class AddToQuizFragment extends DialogFragment{
     ListView quizListView;
     QuizListAdapter qla;
     String quizName, quizId, quizPassword, userPassword;
-    Button backButton;
+    ImageButton backButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,7 +38,7 @@ public class AddToQuizFragment extends DialogFragment{
 
         View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
         quizListView = (ListView) v.findViewById(R.id.quiz_list_in_fragment);
-        backButton = (Button) v.findViewById(R.id.quiz_list_back_button);
+        backButton = (ImageButton) v.findViewById(R.id.quiz_list_back_button);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +111,7 @@ public class AddToQuizFragment extends DialogFragment{
             alert.setTitle("Enter password");
             final EditText input = new EditText(getActivity());
             alert.setView(input);
+            alert.setIcon(R.drawable.locked58);
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     userPassword = input.getText().toString();

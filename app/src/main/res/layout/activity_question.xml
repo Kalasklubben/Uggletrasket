@@ -6,52 +6,68 @@
     <TextView
         android:text="Question..."
         android:id="@+id/question"
-        android:textSize="30dp"
+        android:textSize="18dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_weight="1"/>
+        android:layout_height="0px"
+        android:background="#ffffff"
+        android:padding="20dp"
+        android:textAlignment="center"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_weight="3" />
 
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <Button
-            android:text="A"
+            style="@style/HomeScreenButtonStyle"
+            android:layout_height="0px"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/one"
+            android:text="hej"
+            android:background="#7d191cff"
+            android:adjustViewBounds="true"
             android:id="@+id/alternativeA"
+            android:elegantTextHeight="false">
+        </Button>
+        <Button
+            style="@style/HomeScreenButtonStyle"
+            android:layout_height="0px"
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_width="0px"
-            android:layout_height="wrap_content" />
+            android:drawableLeft="@drawable/two"
+            android:background="#7f07ff17"
+            android:text="hej"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:id="@+id/alternativeB">
+        </Button>
+
+
 
         <Button
-            android:text="B"
-            android:id="@+id/alternativeB"
+            style="@style/HomeScreenButtonStyle"
+            android:layout_height="0px"
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_width="0px"
-            android:layout_height="wrap_content" />
-
-     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+            android:drawableLeft="@drawable/three"
+            android:text="hej"
+            android:background="#81ff0517"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:id="@+id/alternativeC">
+        </Button>
         <Button
-            android:text="C"
-            android:id="@+id/alternativeC"
+            style="@style/HomeScreenButtonStyle"
+            android:layout_height="0px"
+            android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_width="0px"
-            android:layout_height="wrap_content" />
+            android:drawableLeft="@drawable/four"
+            android:background="#7efffb17"
+            android:text="hej"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:id="@+id/alternativeD">
+        </Button>
 
-        <Button
-            android:text="D"
-            android:id="@+id/alternativeD"
-            android:layout_weight="1"
-            android:layout_width="0px"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 </LinearLayout>

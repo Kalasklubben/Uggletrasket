@@ -5,32 +5,40 @@
     android:layout_height="fill_parent"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:background="@android:color/black" />
+        android:background="@android:color/black"
+        android:textAlignment="center" />
 
     <ListView
         android:id="@+id/quiz_list_in_fragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp" >
+        android:layout_height="0px"
+        android:background="#ffffff"
+        android:padding="5dp"
+        android:layout_weight="4">
     </ListView>
 
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/quiz_list_back_button"
-            android:onClick="onButtonClick"/>
-
+        <ImageButton
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/cancel22"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:id="@+id/quiz_list_back_button">
+        </ImageButton>
     </LinearLayout>
 
 </LinearLayout>

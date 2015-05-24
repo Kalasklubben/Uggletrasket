@@ -1,73 +1,72 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    style="@style/backGround">
 
     <LinearLayout
+
         android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="200dp"
-            android:gravity="center_vertical|center_horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="WELCOME TO UGGLETRÄSKET!"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:id="@+id/textView4" />
+            <ImageButton
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/play106"
+                android:background="#7d191cff"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:id="@+id/answerButton">
+            </ImageButton>
+            <ImageButton
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/add13"
+                android:background="#7f07ff17"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:id="@+id/addQuestButton">
+            </ImageButton>
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center_horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                android:text="Start quiz"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/answerButton"/>
-
-                <Button
-                    android:text=" quiz"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/addQuestButton"/>
-
-                <Button
-                    android:text="Add questions"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/editQuizButton"/>
-
-                <Button
-                    android:text="Statistics"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/statistics"/>
-            </LinearLayout>
+            <ImageButton
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/chart47"
+                android:background="#81ff0517"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:id="@+id/statistics">
+            </ImageButton>
+            <ImageButton
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:src="@drawable/pencil124"
+                android:background="#7efffb17"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:id="@+id/editQuizButton">
+            </ImageButton>
         </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-        </LinearLayout>
-
     </LinearLayout>
 
 </RelativeLayout>

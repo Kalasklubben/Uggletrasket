@@ -10,11 +10,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class MainActivity extends ActionBarActivity {
 
     //Declaring
-    private Button next, addQuizButton, statsButton, editQuizButton;
+
+    private ImageButton next, addQuizButton, statsButton, editQuizButton;
     private QuizListFragment dialogOne;
     private AddToQuizFragment dialogTwo;
     FragmentManager manager;
@@ -24,10 +26,10 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //Connect ID to button
-        next = (Button) findViewById(R.id.answerButton);
-        addQuizButton= (Button) findViewById(R.id.addQuestButton);
-        statsButton = (Button) findViewById(R.id.statistics);
-        editQuizButton = (Button) findViewById(R.id.editQuizButton);
+        next = (ImageButton) findViewById(R.id.answerButton);
+        addQuizButton= (ImageButton) findViewById(R.id.addQuestButton);
+        statsButton = (ImageButton) findViewById(R.id.statistics);
+        editQuizButton = (ImageButton) findViewById(R.id.editQuizButton);
 
         manager = getFragmentManager();
 
@@ -46,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddQuiz.class));
+                overridePendingTransition(R.animator.push_left_in,R.animator.push_left_out);
             }
         };
         addQuizButton.setOnClickListener(listAddListener);
@@ -59,13 +62,15 @@ public class MainActivity extends ActionBarActivity {
                 dialogOne.show(manager, "dialog");
             }
         };
+
         statsButton.setOnClickListener(statisticListener);
 
         View.OnClickListener editButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogTwo = new AddToQuizFragment();
-                dialogTwo.show(manager, "dialog");
+                //dialogTwo = new AddToQuizFragment();
+                dialogOne = new QuizListFragment("EDIT");
+                dialogOne.show(manager, "dialog");
             }
         };
         editQuizButton.setOnClickListener(editButtonListener);
