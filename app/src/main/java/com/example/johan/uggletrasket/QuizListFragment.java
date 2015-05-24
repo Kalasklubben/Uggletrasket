@@ -29,7 +29,7 @@ public class QuizListFragment extends DialogFragment{
     QuizList quizzes;
     ListView quizListView;
     QuizListAdapter qla;
-    String quizId, quizPassword, userPassword;
+    String quizId, quizName, quizPassword, userPassword;
     ImageButton backButton;
     String choice ="";
 
@@ -110,6 +110,10 @@ public class QuizListFragment extends DialogFragment{
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             Quiz selectedQuiz = (Quiz) (quizListView.getItemAtPosition(position));
 
+            quizId = selectedQuiz.getID();
+            quizName = selectedQuiz.getName();
+            quizPassword = selectedQuiz.getPassword();
+
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Enter password");
             final EditText input = new EditText(getActivity());
@@ -119,10 +123,16 @@ public class QuizListFragment extends DialogFragment{
                 public void onClick(DialogInterface dialog, int whichButton) {
                     userPassword = input.getText().toString();
                     if (isPasswordCorrect(userPassword, quizPassword)) {
-                        if(choice=="STAT") {
+                        if (choice == "STAT") {
                             Intent i = new Intent(getActivity(), Statistics.class);
                             i.putExtra("quizId", quizId);
                             startActivity(i);
+                        }else if (choice == "EDIT") {
+                            Intent i = new Intent(getActivity().getApplicationContext(), AddQuestion.class);
+                            i.putExtra("quizId", quizId);
+                            i.putExtra("quizName", quizName);
+                            startActivity(i);
+                            killFragment();
                         }else {
                             Intent i = new Intent(getActivity(), QuestionActivity.class);
                             i.putExtra("quizId", quizId);

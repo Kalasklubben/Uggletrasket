@@ -56,6 +56,7 @@ public class AddQuiz extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AddQuiz.this, MainActivity.class));
+                overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
 

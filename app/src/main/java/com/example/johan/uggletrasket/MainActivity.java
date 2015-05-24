@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddQuiz.class));
-                overridePendingTransition(R.animator.push_down_in,R.animator.push_down_out);
+                overridePendingTransition(R.animator.push_left_in,R.animator.push_left_out);
             }
         };
         addQuizButton.setOnClickListener(listAddListener);
@@ -68,8 +68,9 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener editButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogTwo = new AddToQuizFragment();
-                dialogTwo.show(manager, "dialog");
+                //dialogTwo = new AddToQuizFragment();
+                dialogOne = new QuizListFragment("EDIT");
+                dialogOne.show(manager, "dialog");
             }
         };
         editQuizButton.setOnClickListener(editButtonListener);

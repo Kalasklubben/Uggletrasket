@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/NoActionBarTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".Start"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +24,11 @@
         <activity
             android:name=".QuestionActivity"
             android:label="@string/app_name" />
+
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" />
+
         <activity
             android:name=".AddQuestion"
             android:label="@string/title_activity_add_question" />
