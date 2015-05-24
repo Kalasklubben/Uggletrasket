@@ -46,6 +46,7 @@ public class Statistics extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Statistics.this, MainActivity.class));
+                overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
 

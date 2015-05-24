@@ -103,6 +103,7 @@ public class AddQuiz extends ActionBarActivity {
                     intent.putExtra("quizId", randomId);
                     intent.putExtra("quizName", name);
                     startActivity(intent);
+                    overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
 
                 } catch (ClientProtocolException e) {
                     e.printStackTrace();

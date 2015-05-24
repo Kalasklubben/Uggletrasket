@@ -27,6 +27,6 @@ public class Start extends ActionBarActivity {
                 Start.this.finish();
                 overridePendingTransition(R.animator.fadein,R.animator.fadeout);
             }
-        }, 3000);
+        }, 2000);
     }
 }

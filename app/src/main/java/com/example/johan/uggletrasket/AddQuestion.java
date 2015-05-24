@@ -53,6 +53,7 @@ public class AddQuestion extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AddQuestion.this, MainActivity.class));
+                overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
 
@@ -99,11 +100,19 @@ public class AddQuestion extends ActionBarActivity {
                         HttpResponse response = httpClient.execute(httpPost);
                         HttpEntity entity = response.getEntity();
 
+                        /*
                         is = entity.getContent();
                         noQuestions++;
                         String msg = noQuestions + " question(s) added to " + quizName;
                         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                        clearDisplay();
+                        */
+
+                        Intent intent = new Intent(AddQuestion.this, AddQuestion.class);
+                        intent.putExtra("quizId", quizInfo.getString("quizId"));
+                        intent.putExtra("quizName", quizInfo.getString("quizName"));
+                        startActivity(intent);
+                        overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
+
                     } catch (ClientProtocolException e) {
                         e.printStackTrace();
                     } catch (UnsupportedEncodingException e) {
