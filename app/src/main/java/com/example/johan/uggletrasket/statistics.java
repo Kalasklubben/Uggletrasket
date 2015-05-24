@@ -17,6 +17,7 @@ public class Statistics extends Activity {
     /** Called when the activity is first created. */
 
     TextView resultView;
+    TextView header;
     private ImageButton returnButton;
     ScrollView mScrollView;
     String quizID = "";
@@ -29,6 +30,7 @@ public class Statistics extends Activity {
         StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
         resultView = (TextView) findViewById(R.id.result);
+        header = (TextView) findViewById(R.id.header);
         returnButton = (ImageButton) findViewById(R.id.return_stats_button);
 
         //Get quizID
@@ -52,7 +54,8 @@ public class Statistics extends Activity {
     }
 
     private void printResult() {
-        String output = "The result of choosen quiz:\n";
+        //String output = "The result of choosen quiz:\n";
+        String output = "";
         while(!ql.endOfList()){
             Question temp = ql.getNext();
             double perc;
@@ -65,6 +68,7 @@ public class Statistics extends Activity {
             perc = perc*100;
             DecimalFormat df = new DecimalFormat("0.00");
             output = (output + "\nQuestion: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n");
+            //output = "Question: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n";
         }
         resultView.setText(output);
     }

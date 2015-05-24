@@ -115,6 +115,7 @@ public class QuizListFragment extends DialogFragment{
             alert.setTitle("Enter password");
             final EditText input = new EditText(getActivity());
             alert.setView(input);
+            alert.setIcon(R.drawable.locked58);
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
                     userPassword = input.getText().toString();

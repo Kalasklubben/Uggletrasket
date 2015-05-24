@@ -48,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddQuiz.class));
+                overridePendingTransition(R.animator.push_down_in,R.animator.push_down_out);
             }
         };
         addQuizButton.setOnClickListener(listAddListener);
@@ -61,6 +62,7 @@ public class MainActivity extends ActionBarActivity {
                 dialogOne.show(manager, "dialog");
             }
         };
+
         statsButton.setOnClickListener(statisticListener);
 
         View.OnClickListener editButtonListener = new View.OnClickListener() {

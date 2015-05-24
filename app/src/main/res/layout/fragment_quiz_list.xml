@@ -5,23 +5,19 @@
     android:layout_height="fill_parent"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:orientation="vertical">
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="@android:color/black" />
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <ListView
         android:id="@+id/quiz_list_in_fragment"
         android:layout_width="match_parent"
-        android:layout_height="300dp" >
+        android:layout_height="300dp">
     </ListView>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1">
 
         <ImageButton
