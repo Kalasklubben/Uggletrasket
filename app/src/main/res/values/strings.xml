@@ -21,7 +21,7 @@
     <string name="errorDatabase">Could not connect to database!"</string>
 
     <string name="title_activity_add_question">AddQuestion</string>
-    <string name="title_activity_statistics">statistics</string>
+    <string name="title_activity_statistics">Statistics</string>
 
     <string name="hello_world">Hello world!</string>
 

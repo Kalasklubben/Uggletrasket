@@ -2,13 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff2f3f0">
+    android:background="#ffffffff"
+    android:paddingTop="150dp"
+    android:paddingLeft="80dp"
+    android:paddingRight="80dp">
 
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0px"
         android:id="@+id/imageView"
         android:background="#ffffff"
         android:src="@drawable/owl1"
-        android:padding="125dp" />
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0px"
+        android:text="Uggletrasket"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:textSize="32dp" />
 </LinearLayout>
