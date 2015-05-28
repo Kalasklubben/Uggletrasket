@@ -4,6 +4,7 @@ import android.util.Log;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -13,6 +14,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 /**
  * Created by Johan on 09/05/2015.
@@ -22,20 +24,11 @@ public class LoadQuizzes {
     public static QuizList getData(String script){
 
         String result = "";
-        InputStream isr = null;
 
-        try{
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost(script); //YOUR PHP SCRIPT ADDRESS
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-            isr = entity.getContent();
-        }
-        catch(Exception e){
-            Log.e("log_tag", "Error in http connection " + e.toString());
-        }
+        //download from database
+        InputStream isr = Update.update(new ArrayList<NameValuePair>(1),script);
 
-        //convert response to string
+        //convert response from database to string
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
             StringBuilder sb = new StringBuilder();
@@ -59,7 +52,6 @@ public class LoadQuizzes {
 
             for(int i=0; i<jArray.length();i++){
                 JSONObject json = jArray.getJSONObject(i);
-
                 Quiz temp = new Quiz();
 
                 try {
@@ -69,15 +61,12 @@ public class LoadQuizzes {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-
                 loadedQuizzes.addQuiz(temp);
-
             }
         } catch (Exception e) {
             // TODO: handle exception
             Log.e("log_tag", "Error Parsing Data "+e.toString());
         }
-
         return loadedQuizzes;
     }
 }

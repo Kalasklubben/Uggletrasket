@@ -45,7 +45,7 @@ public static void updateNoCorrectAnswer(String Idnumber, String NoCorrectAnswer
 
 
 
-public static void update(List<NameValuePair> nameValuePairs, String url){
+public static InputStream update(List<NameValuePair> nameValuePairs, String url){
     StrictMode.enableDefaults();
     InputStream is = null;
         try {
@@ -61,8 +61,6 @@ public static void update(List<NameValuePair> nameValuePairs, String url){
 
         is = entity.getContent();
 
-
-
     } catch (ClientProtocolException e) {
         e.printStackTrace();
     } catch (UnsupportedEncodingException e) {
@@ -70,7 +68,7 @@ public static void update(List<NameValuePair> nameValuePairs, String url){
     } catch (IOException e) {
         e.printStackTrace();
     }
-
+    return is;
 }
 
 }
