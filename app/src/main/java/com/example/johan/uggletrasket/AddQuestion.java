@@ -60,8 +60,6 @@ public class AddQuestion extends ActionBarActivity {
         bBack.setOnClickListener(backList);
         bSubmit.setOnClickListener(new View.OnClickListener() {
 
-            InputStream is = null;
-
             @Override
             public void onClick(View arg0){
                 String Question = "" + editQuestion.getText().toString();
@@ -94,7 +92,7 @@ public class AddQuestion extends ActionBarActivity {
                 nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
 
                 //Upload Question
-                is = Update.update(nameValuePairs, getResources().getString(R.string.addQuestion));
+                Database.update(nameValuePairs, getResources().getString(R.string.addQuestion));
 
                 //Go to new "addQuestion" screen, every new question will need the quiz id.
                 Intent intent = new Intent(AddQuestion.this, AddQuestion.class);

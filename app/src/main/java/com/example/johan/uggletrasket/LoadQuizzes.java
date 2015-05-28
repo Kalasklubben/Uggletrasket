@@ -26,7 +26,7 @@ public class LoadQuizzes {
         String result = "";
 
         //download from database
-        InputStream isr = Update.update(new ArrayList<NameValuePair>(1),script);
+        InputStream isr = Database.update(new ArrayList<NameValuePair>(1),script);
 
         //convert response from database to string
         try{

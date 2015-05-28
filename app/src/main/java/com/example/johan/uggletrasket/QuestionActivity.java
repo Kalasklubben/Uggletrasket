@@ -10,9 +10,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -96,16 +100,20 @@ public class QuestionActivity extends ActionBarActivity{
         int temp = questions.getCurrentQuestion().getShowTimes() + 1;
         String showtime = "" + temp;
         String Id = questions.getCurrentQuestion().getID();
-        Update.updateShowtime(Id, showtime);
-
-
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("Id", Id));
+        nameValuePairs.add(new BasicNameValuePair("Showtimes", showtime));
+        Database.update(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateShow.php");
     }
 
     private void updateNoCurrentAnswers(){
         int temp = questions.getCurrentQuestion().getNoCorrectAnswers() + 1;
         String NoCorrectAnswer = "" + temp;
         String Id = questions.getCurrentQuestion().getID();
-        Update.updateNoCorrectAnswer(Id, NoCorrectAnswer);
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("Id", Id));
+        nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", NoCorrectAnswer));
+        Database.update(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateNoCorrectAnswer.php");
     }
 
    /* private Question getQuestion(String ID){

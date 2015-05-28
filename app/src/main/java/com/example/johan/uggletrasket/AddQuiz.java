@@ -65,7 +65,7 @@ public class AddQuiz extends ActionBarActivity {
         //Add quiz when create button is clicked.
         create.setOnClickListener(new View.OnClickListener() {
 
-            InputStream is = null;
+
 
             @Override
             public void onClick(View arg0){
@@ -84,7 +84,7 @@ public class AddQuiz extends ActionBarActivity {
                 nameValuePairs.add(new BasicNameValuePair("Password", passw));
 
                 //Upload Quiz
-                is = Update.update(nameValuePairs,getResources().getString(R.string.addQuiz));
+                Database.update(nameValuePairs,getResources().getString(R.string.addQuiz));
 
                 //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
                 Intent intent = new Intent(AddQuiz.this, AddQuestion.class);

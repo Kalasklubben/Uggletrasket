@@ -30,7 +30,7 @@ public class LoadQuestions {
         String url = script + "?QuizId=" + quizId;
 
         //download from database
-        InputStream isr = Update.update(new ArrayList<NameValuePair>(1), url );
+        InputStream isr = Database.update(new ArrayList<NameValuePair>(1), url );
 
 
         //convert response to string
