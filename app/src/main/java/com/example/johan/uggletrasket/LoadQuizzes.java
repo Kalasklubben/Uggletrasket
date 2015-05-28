@@ -25,10 +25,10 @@ public class LoadQuizzes {
 
         String result = "";
 
-        //download from database
+        //Download from database
         InputStream isr = Database.update(new ArrayList<NameValuePair>(1),script);
 
-        //convert response from database to string
+        //Convert response from database to string
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
             StringBuilder sb = new StringBuilder();

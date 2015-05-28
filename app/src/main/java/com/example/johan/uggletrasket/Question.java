@@ -9,6 +9,8 @@ import java.util.UUID;
 
 //Class representing a question
 public class Question implements Serializable{
+
+    //Declaration of all variables.
     private String ID;
     private String question;
     private String correctAnswer, userAnswer;
@@ -21,38 +23,47 @@ public class Question implements Serializable{
         ID = UUID.randomUUID().toString();
     }
 
+    //Set question id.
     public void setID(String newID){
         this.ID = newID;
     }
 
+    //Return question id.
     public String getID(){
         return ID;
     }
 
+    //Set question.
     public void setQuestion(String newQuest){
         question = newQuest;
     }
 
+    //Return question.
     public String getQuestion(){
         return question;
     }
 
+    //Set correct answer.
     public void setAnswer(String answer){
         correctAnswer = answer;
     }
 
+    //Return correct answer.
     public String getAnswer(){
         return correctAnswer;
     }
 
+    //Set user answer.
     public void setUserAnswer(String answer) {
         userAnswer = answer;
     }
 
+    //Return user answer.
     public String getUserAnswer() {
         return userAnswer;
     }
 
+    //Add alternative.
     public void addAlternative(String alt) throws Exception{
         try {
             alternatives[numberOfAlts] = alt;
@@ -62,27 +73,33 @@ public class Question implements Serializable{
         }
     }
 
+    //Return all alternatives as an array.
     public String[] getAlternatives(){
         return alternatives.clone();
     }
 
+    //Remove all alternatives.
     public void removeAllAlternatives(){
         alternatives = new String[3];
         numberOfAlts = 0;
     }
 
+    //Set number of correct answers.
     public void setNoCorrectAnswers(int nca){
         noCorrectAnswers = nca;
     }
 
+    //Return number of correct answers.
     public int getNoCorrectAnswers(){
         return noCorrectAnswers;
     }
 
+    //Set number of times which the questions has been showed.
     public void setShowTimes(int st){
         showTimes = st;
     }
 
+    //Return number of times which the questions has been showed.
     public int getShowTimes(){
         return showTimes;
     }

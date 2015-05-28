@@ -26,15 +26,12 @@ public class LoadQuestions {
     public static QuestionList getData(String script, String quizId){
 
         String result = "";
-
         String url = script + "?QuizId=" + quizId;
 
-        //download from database
+        //Download from database
         InputStream isr = Database.update(new ArrayList<NameValuePair>(1), url );
 
-
-        //convert response to string
-
+        //Convert response to string
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
             StringBuilder sb = new StringBuilder();

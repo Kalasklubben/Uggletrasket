@@ -33,25 +33,28 @@ import java.util.UUID;
  */
 public class AddQuiz extends ActionBarActivity {
 
-    EditText quizName, password;
-    ImageButton create, cancel;
+    //Declaration of all inputs and buttons
+    private EditText quizName, password;
+    private ImageButton create, cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Not sure about what it does, but it's needed.
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
+
+        //Connect activity with layout
         setContentView(R.layout.activity_add_quiz);
 
+        //Connect all inputs and buttons with respective layout id
         quizName = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
         create = (ImageButton) findViewById(R.id.createButton);
         cancel = (ImageButton) findViewById(R.id.cancelButton);
 
-        //Go back to the main screen if cancel button is clicked.
+        //Listener. Go back to the main activity if cancel button is clicked
         View.OnClickListener cancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,25 +63,27 @@ public class AddQuiz extends ActionBarActivity {
             }
         };
 
+        //Add listener to cancel button
         cancel.setOnClickListener(cancelListener);
 
-        //Add quiz when create button is clicked.
+        //Listener. Add quiz when create button is clicked. Then navigate to AddQuestion activity.
         create.setOnClickListener(new View.OnClickListener() {
 
 
 
             @Override
             public void onClick(View arg0){
+
                 //Convert entered information into strings.
                 String name = "" + quizName.getText().toString();
                 String passw = "" + password.getText().toString();
 
+                //Create quiz
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 
                 //Saving the randomId for later use.
                 String randomId = UUID.randomUUID().toString();
 
-                //Create Quiz
                 nameValuePairs.add(new BasicNameValuePair("Id", randomId));
                 nameValuePairs.add(new BasicNameValuePair("Name", name));
                 nameValuePairs.add(new BasicNameValuePair("Password", passw));
@@ -118,6 +123,8 @@ public class AddQuiz extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //Navigate to the main menu when pressing the back button.
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
     }

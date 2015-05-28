@@ -28,6 +28,8 @@ public class Database {
     public static InputStream update(List<NameValuePair> nameValuePairs, String url){
         StrictMode.enableDefaults();
         InputStream is = null;
+
+        //Communication with the database
         try {
             HttpClient httpClient = new DefaultHttpClient();
 

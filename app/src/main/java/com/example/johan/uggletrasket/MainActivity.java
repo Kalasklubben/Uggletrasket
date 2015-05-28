@@ -14,36 +14,41 @@ import android.widget.ImageButton;
 
 public class MainActivity extends ActionBarActivity {
 
-    //Declaring
-
-    private ImageButton next, addQuizButton, statsButton, editQuizButton;
-    private QuizListFragment dialogOne;
-    //private AddToQuizFragment dialogTwo;
+    //Declaration of all inputs and buttons.
+    private ImageButton play, addQuizButton, statsButton, editQuizButton;
+    private QuizListFragment quizList;
     FragmentManager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Connect activity with layout
         setContentView(R.layout.activity_main);
 
-        //Connect ID to button
-        next = (ImageButton) findViewById(R.id.answerButton);
+        //Connect all inputs and buttons with respective layout id
+        play = (ImageButton) findViewById(R.id.answerButton);
         addQuizButton= (ImageButton) findViewById(R.id.addQuestButton);
         statsButton = (ImageButton) findViewById(R.id.statistics);
         editQuizButton = (ImageButton) findViewById(R.id.editQuizButton);
 
+        //Assign fragment manager
         manager = getFragmentManager();
 
-        //Listener for next button
+        //Listener for play button. Show list of quizzes.
         View.OnClickListener listNextListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
-                dialogOne = new QuizListFragment("");
-                dialogOne.show(manager, "dialog");
+
+                quizList = new QuizListFragment("");
+                quizList.show(manager, "dialog");
             }
         };
-        next.setOnClickListener(listNextListener);
 
+        //Add listener to play button
+        play.setOnClickListener(listNextListener);
+
+        //Listener for add quiz button. Navigate to AddQuiz activity.
         View.OnClickListener listAddListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,28 +56,35 @@ public class MainActivity extends ActionBarActivity {
                 overridePendingTransition(R.animator.push_left_in,R.animator.push_left_out);
             }
         };
+
+        //Add listener to addQuiz button
         addQuizButton.setOnClickListener(listAddListener);
 
+        //Listener for statistics button. Show list of quizzes.
         View.OnClickListener statisticListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                // startActivity(new Intent(MainActivity.this, Statistics.class));
 
-                dialogOne = new QuizListFragment("STAT");
-                dialogOne.show(manager, "dialog");
+                quizList = new QuizListFragment("STAT");
+                quizList.show(manager, "dialog");
             }
         };
 
+        //Add listener to statistics button
         statsButton.setOnClickListener(statisticListener);
 
+        //Listener for editQuiz button. Show list of quizzes.
         View.OnClickListener editButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //dialogTwo = new AddToQuizFragment();
-                dialogOne = new QuizListFragment("EDIT");
-                dialogOne.show(manager, "dialog");
+                quizList = new QuizListFragment("EDIT");
+                quizList.show(manager, "dialog");
             }
         };
+
+        //Add listener to editQuiz button.
         editQuizButton.setOnClickListener(editButtonListener);
     }
 
@@ -97,6 +109,7 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Exit the app when pressing the back button.
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
