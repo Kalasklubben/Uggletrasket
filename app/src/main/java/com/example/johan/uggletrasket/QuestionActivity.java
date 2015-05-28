@@ -92,22 +92,6 @@ public class QuestionActivity extends ActionBarActivity{
         displayQuestion(questions.getNext());
     }
 
-
-    //TODO
-    //
-    //Some of the following methods might be more suitable in LoadQuestions
-//    private void uploadAnswers() {
-//        questions.resetCursor();
-//        for(int i = 0; i < questions.getSize(); i++){
-//            Question temp = questions.getNext();
-//            if(temp.getAnswer()== temp.getUserAnswer()) {
-//                updateNoCurrentAnswers(temp);
-//                updateShowtime(temp);
-//            }else
-//                updateShowtime(temp);
-//        }
-//    }
-
     private void updateShowtime(){
         int temp = questions.getCurrentQuestion().getShowTimes() + 1;
         String showtime = "" + temp;
@@ -135,7 +119,7 @@ public class QuestionActivity extends ActionBarActivity{
         //Update question
     }
     */
-    
+
     //Method to display question to private instance
     private void displayQuestion(Question question) {
 

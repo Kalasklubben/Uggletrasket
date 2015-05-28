@@ -60,8 +60,6 @@ public static InputStream update(List<NameValuePair> nameValuePairs, String url)
         HttpEntity entity = response.getEntity();
 
         is = entity.getContent();
-
-
     } catch (ClientProtocolException e) {
         e.printStackTrace();
     } catch (UnsupportedEncodingException e) {
