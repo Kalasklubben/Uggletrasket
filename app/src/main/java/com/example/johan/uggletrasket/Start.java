@@ -16,12 +16,12 @@ public class Start extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        /* New Handler to start the Menu-Activity
-         * and close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable() {
+        //New handler to begin our MainActivity
+         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
+
+                // Create an Intent that starts Mainactivity
                 Intent mainIntent = new Intent(Start.this, MainActivity.class);
                 Start.this.startActivity(mainIntent);
                 Start.this.finish();
