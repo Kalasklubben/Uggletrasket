@@ -64,63 +64,45 @@ public class AddQuestion extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0){
-                    String Question = "" + editQuestion.getText().toString();
-                    String Correct = "" + editCorrect.getText().toString();
-                    String Wrong1 = "" + editWrong1.getText().toString();
-                    String Wrong2 = "" + editWrong2.getText().toString();
-                    String Wrong3 = "" + editWrong3.getText().toString();
+                String Question = "" + editQuestion.getText().toString();
+                String Correct = "" + editCorrect.getText().toString();
+                String Wrong1 = "" + editWrong1.getText().toString();
+                String Wrong2 = "" + editWrong2.getText().toString();
+                String Wrong3 = "" + editWrong3.getText().toString();
 
-                    //Get quizInfo from AddQuiz
-                    String quizName = null;
-                    String quizId = null;
-                    Bundle quizInfo = getIntent().getExtras();
-                    if(quizInfo != null) {
-                        quizName = quizInfo.getString("quizName");
-                        quizId = quizInfo.getString("quizId");
-                    }
-
-
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-
-                    nameValuePairs.add(new BasicNameValuePair("Id", UUID.randomUUID().toString()));
-                    nameValuePairs.add(new BasicNameValuePair("Question", Question));
-                    nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
-                    nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
-                    nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
-                    nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
-                    nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
-                    nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
-
-                    try {
-                        HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost(getResources().getString(R.string.addQuestion));
-                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                        HttpResponse response = httpClient.execute(httpPost);
-                        HttpEntity entity = response.getEntity();
-
-                        /*
-                        is = entity.getContent();
-                        noQuestions++;
-                        String msg = noQuestions + " question(s) added to " + quizName;
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                        */
-
-                        Intent intent = new Intent(AddQuestion.this, AddQuestion.class);
-                        intent.putExtra("quizId", quizInfo.getString("quizId"));
-                        intent.putExtra("quizName", quizInfo.getString("quizName"));
-                        startActivity(intent);
-                        overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
-
-                    } catch (ClientProtocolException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                //Get quizInfo from AddQuiz
+                String quizName = null;
+                String quizId = null;
+                Bundle quizInfo = getIntent().getExtras();
+                if(quizInfo != null) {
+                    quizName = quizInfo.getString("quizName");
+                    quizId = quizInfo.getString("quizId");
                 }
+
+                //Create Question
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+
+                nameValuePairs.add(new BasicNameValuePair("Id", UUID.randomUUID().toString()));
+                nameValuePairs.add(new BasicNameValuePair("Question", Question));
+                nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
+                nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
+                nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
+                nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
+                nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
+                nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
+                nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
+                nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
+
+                //Upload Question
+                is = Update.update(nameValuePairs, getResources().getString(R.string.addQuestion));
+
+                //Go to new "addQuestion" screen, every new question will need the quiz id.
+                Intent intent = new Intent(AddQuestion.this, AddQuestion.class);
+                intent.putExtra("quizId", quizInfo.getString("quizId"));
+                intent.putExtra("quizName", quizInfo.getString("quizName"));
+                startActivity(intent);
+                overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
+            }
         });
     }
 

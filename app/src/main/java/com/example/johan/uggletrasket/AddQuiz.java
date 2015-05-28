@@ -69,7 +69,6 @@ public class AddQuiz extends ActionBarActivity {
 
             @Override
             public void onClick(View arg0){
-
                 //Convert entered information into strings.
                 String name = "" + quizName.getText().toString();
                 String passw = "" + password.getText().toString();
@@ -79,41 +78,21 @@ public class AddQuiz extends ActionBarActivity {
                 //Saving the randomId for later use.
                 String randomId = UUID.randomUUID().toString();
 
-                //Adding information into database format using the nameValuePairs list.
+                //Create Quiz
                 nameValuePairs.add(new BasicNameValuePair("Id", randomId));
                 nameValuePairs.add(new BasicNameValuePair("Name", name));
                 nameValuePairs.add(new BasicNameValuePair("Password", passw));
 
-                //Time to upload to database.
-                try {
-                    HttpClient httpClient = new DefaultHttpClient();
+                //Upload Quiz
+                is = Update.update(nameValuePairs,getResources().getString(R.string.addQuiz));
 
-                    HttpPost httpPost = new HttpPost(getResources().getString(R.string.addQuiz));
-
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                    HttpResponse response = httpClient.execute(httpPost);
-
-                    HttpEntity entity = response.getEntity();
-
-                    is = entity.getContent();
-
-                    //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
-                    Intent intent = new Intent(AddQuiz.this, AddQuestion.class);
-                    intent.putExtra("quizId", randomId);
-                    intent.putExtra("quizName", name);
-                    startActivity(intent);
-                    overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
-
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
+                Intent intent = new Intent(AddQuiz.this, AddQuestion.class);
+                intent.putExtra("quizId", randomId);
+                intent.putExtra("quizName", name);
+                startActivity(intent);
+                overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
             }
-
         });
 
     }
