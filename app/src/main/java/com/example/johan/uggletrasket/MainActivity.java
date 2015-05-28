@@ -18,7 +18,7 @@ public class MainActivity extends ActionBarActivity {
 
     private ImageButton next, addQuizButton, statsButton, editQuizButton;
     private QuizListFragment dialogOne;
-    private AddToQuizFragment dialogTwo;
+    //private AddToQuizFragment dialogTwo;
     FragmentManager manager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

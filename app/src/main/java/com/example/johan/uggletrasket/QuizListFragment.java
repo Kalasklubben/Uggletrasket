@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,7 +117,9 @@ public class QuizListFragment extends DialogFragment{
 
             AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
             alert.setTitle("Enter password");
+
             final EditText input = new EditText(getActivity());
+            input.setTransformationMethod(PasswordTransformationMethod.getInstance());
             alert.setView(input);
             alert.setIcon(R.drawable.locked58);
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -143,6 +146,7 @@ public class QuizListFragment extends DialogFragment{
                     } else {
                         Toast.makeText(getActivity(), "Incorrect password!", Toast.LENGTH_SHORT).show();
                     }
+
 
                 }
             });

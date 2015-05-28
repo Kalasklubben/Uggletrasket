@@ -124,7 +124,7 @@ public class QuestionActivity extends ActionBarActivity{
         Update.updateNoCorrectAnswer(Id, NoCorrectAnswer);
     }
 
-    private Question getQuestion(String ID){
+   /* private Question getQuestion(String ID){
         //TODO
         //Load single question
         return new Question();
@@ -134,7 +134,8 @@ public class QuestionActivity extends ActionBarActivity{
         //TODO
         //Update question
     }
-
+    */
+    
     //Method to display question to private instance
     private void displayQuestion(Question question) {
 
