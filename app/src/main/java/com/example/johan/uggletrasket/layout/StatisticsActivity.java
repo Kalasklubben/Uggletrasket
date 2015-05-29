@@ -1,48 +1,49 @@
 package com.example.johan.uggletrasket.layout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.johan.uggletrasket.util.Database;
-import com.example.johan.uggletrasket.model.Question;
-import com.example.johan.uggletrasket.model.QuestionList;
 import com.example.johan.uggletrasket.R;
+import com.example.johan.uggletrasket.model.ItemList;
+import com.example.johan.uggletrasket.model.Question;
+import com.example.johan.uggletrasket.util.Database;
 
 import java.text.DecimalFormat;
 
-
 public class StatisticsActivity extends Activity {
-    /** Called when the activity is first created. */
 
-    private TextView resultView;
     private ImageButton returnButton;
     private String quizID = "";
-    private QuestionList ql;
-            
+    private ItemList<Question> questions;
+
+    private QuizListAdapter qla;
+    private ListView questionList;
+    private TextView title;
+
 ;   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_statistics);
+        setContentView(R.layout.activity_item_list);
 
-        //Connect all inputs and buttons with the layout id
-        resultView = (TextView) findViewById(R.id.result);
-        returnButton = (ImageButton) findViewById(R.id.return_stats_button);
+        returnButton = (ImageButton) findViewById(R.id.main_menu_return);
+        title = (TextView) findViewById(R.id.result);
 
-        //Get quizID
         Bundle quizInfo = getIntent().getExtras();
         if(quizInfo != null) {
             quizID = quizInfo.getString("quizId");
         }
 
         //Download questions from database
-        ql =  Database.getQuestionList(getResources().getString(R.string.getQuizQuestions), quizID);
-
-        //Prints the result
-        printResult();
+        questions =  Database.getQuestionList(getResources().getString(R.string.getQuizQuestions), quizID);
 
         //Listener for the return button
         View.OnClickListener listAdd = new View.OnClickListener() {
@@ -52,34 +53,53 @@ public class StatisticsActivity extends Activity {
                 overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
-
         returnButton.setOnClickListener(listAdd);
+        populateQuestionListView();
+        title.setText("Result of chosen quiz");
     }
 
-    //Prints the result
-    private void printResult() {
-
-        String output = "";
-
-        //Iterates through the list of questions
-        while(!ql.endOfList()){
-            Question temp = ql.getNext();
-
-            //Calculates the percentage of correct answers
-            double perc;
-            if (temp.getShowTimes() < 1) {
-                perc = 0;
-            }else{
-                perc = (double)temp.getNoCorrectAnswers()/(double)temp.getShowTimes();
+    //An adapter class to assist the making of a list of Questions shown in activity_item_list
+    //Takes a statistics_item layout and retrieves views from it. Then fills the views with
+    //appropriate values from the Question object. The result corresponds to an item in the list
+    private class QuizListAdapter extends ArrayAdapter<Question>
+    {
+        public QuizListAdapter(Context context)
+        {
+            super(context,0);
+        }
+        public View getView(int position, View convertView, ViewGroup parent)
+        {
+            if (convertView == null)
+            {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.statistics_item, null);
             }
-            perc = perc*100;
+
+            // Fetching the views of the layout
+            TextView question = (TextView) convertView.findViewById(R.id.quiz_item_question);
+            TextView result = (TextView) convertView.findViewById(R.id.quiz_item_correct_answer);
+
+            // Populate the data into the template layout (quiz_item)
+            question.setHint(getItem(position).getQuestion());
+            Double temp = getItem(position).getCorrectPercentage();
             DecimalFormat df = new DecimalFormat("0.00");
 
-            //The printed string
-            output = (output + "\nQuestion: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n");
+            result.setHint(df.format(temp) + " %");
+
+            return convertView;
         }
-        resultView.setText(output);
     }
 
+    // Adds all questions from an array of questions to the list view in the result activity
+    // using the QuizListAdapter for every Question object
+    private void populateQuestionListView(){
+        questionList = (ListView) findViewById(R.id.question_list);
+        qla = new QuizListAdapter(this);
+        for(int i = 0; i < questions.getSize(); i++)
+            qla.add(questions.getNext(Question.class));
 
+        //sets the adapter for all the list items
+        if(questionList != null){
+            questionList.setAdapter(qla);
+        }
+    }
 }

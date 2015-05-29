@@ -10,10 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.johan.uggletrasket.util.Database;
-import com.example.johan.uggletrasket.model.Question;
-import com.example.johan.uggletrasket.model.QuestionList;
 import com.example.johan.uggletrasket.R;
+import com.example.johan.uggletrasket.model.ItemList;
+import com.example.johan.uggletrasket.model.Question;
+import com.example.johan.uggletrasket.util.Database;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -22,16 +22,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-/**
- * Created by David on 27/04/2015.
- */
 public class QuestionActivity extends ActionBarActivity{
 
-    //Declaration of all inputs and buttons.
     private Button[] buttonArray = new Button[4];
     private TextView questionView;
-    private QuestionList questions;
+    private ItemList<Question> questions;
     private int correctButtonID;
     private int correctAnswers = 0, wrongAnswers = 0;
 
@@ -39,30 +34,26 @@ public class QuestionActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //STRICT MODE ENABLED
+        //Enables database connectivity
         StrictMode.enableDefaults();
 
-        //Connect activity with layout.
         setContentView(R.layout.activity_question);
 
-        //Connect all inputs and buttons with respective layout id.
         buttonArray[0] = (Button) findViewById(R.id.alternativeA);
         buttonArray[1] = (Button) findViewById(R.id.alternativeB);
         buttonArray[2] = (Button) findViewById(R.id.alternativeC);
         buttonArray[3] = (Button) findViewById(R.id.alternativeD);
         questionView = (TextView) findViewById(R.id.question);
 
-        //Get the quizId that is used to get the correct questions.
         String quizId = "";
         Bundle quizInfo = getIntent().getExtras();
         if(quizInfo != null) {
             quizId = quizInfo.getString("quizId");
         }
 
-        //Get the list of questions.
+        //Get the list of questions to be answered
         this.questions = Database.getQuestionList(getResources().getString(R.string.getQuizQuestions), quizId);
 
-        //Listeners for buttons.
         final String finalQuizId = quizId;
         View.OnClickListener list = new View.OnClickListener() {
 
@@ -71,10 +62,9 @@ public class QuestionActivity extends ActionBarActivity{
                 updateShowtime();
 
                 Button answer = (Button) findViewById(v.getId());
-                questions.getCurrentQuestion().setUserAnswer(answer.getText().toString());
+                //when pressing an alternative, the answer is saved within the Question object
+                questions.getCurrentItem().setUserAnswer(answer.getText().toString());
 
-                //Update number of correct answers if the right alternative was chosen.
-                //Else update number of wrong answers if the incorrect alternative was chosen.
                 if(v.getId() == correctButtonID) {
                     correctAnswers++;
                     updateNoCorrectAnswers();
@@ -84,7 +74,7 @@ public class QuestionActivity extends ActionBarActivity{
 
                 //If there are no more questions, sends data containing number of correct answers
                 //together with the questions themselves. Then navigate to the result activity.
-                if (questions.endOfList()) {
+                if (questions.isEndOfList()) {
                     Intent i = new Intent(QuestionActivity.this, QuizResultActivity.class);
                     i.putExtra("correct", correctAnswers);
                     i.putExtra("wrong", wrongAnswers);
@@ -93,51 +83,47 @@ public class QuestionActivity extends ActionBarActivity{
                     i.putExtra("ID", finalQuizId);
                     startActivity(i);
                 }else {
-                    displayQuestion(questions.getNext());
+                    displayQuestion(questions.getNext(Question.class));
                 }
             }
         };
 
-        //Add listeners to buttons.
         for (int i = 0; i < 4; i++)
             buttonArray[i].setOnClickListener(list);
 
-        //Display question to private instance.
-        displayQuestion(questions.getNext());
+        displayQuestion(questions.getNext(Question.class));
     }
 
-    //Method to update the number of times a question has been answered.
+    //Updates the number of times a question has been answered.
     private void updateShowtime(){
-        int temp = questions.getCurrentQuestion().getShowTimes() + 1;
+        int temp = questions.getCurrentItem().getShowTimes() + 1;
         String showtime = "" + temp;
-        String Id = questions.getCurrentQuestion().getID();
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        String Id = questions.getCurrentItem().getID();
+        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
         nameValuePairs.add(new BasicNameValuePair("Id", Id));
         nameValuePairs.add(new BasicNameValuePair("Showtimes", showtime));
-        Database.update(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateShow.php");
+        Database.addTableEntry(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateShow.php");
     }
 
-    //Method to update the number of times a question has been answered correctly.
+    //Updates the number of times a question has been answered correctly.
     private void updateNoCorrectAnswers(){
-        int temp = questions.getCurrentQuestion().getNoCorrectAnswers() + 1;
+        int temp = questions.getCurrentItem().getNoCorrectAnswers() + 1;
         String NoCorrectAnswer = "" + temp;
-        String Id = questions.getCurrentQuestion().getID();
-        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        String Id = questions.getCurrentItem().getID();
+        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
         nameValuePairs.add(new BasicNameValuePair("Id", Id));
         nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", NoCorrectAnswer));
-        Database.update(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateNoCorrectAnswer.php");
+        Database.addTableEntry(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateNoCorrectAnswer.php");
     }
 
-    //Method to display question to private instance
     private void displayQuestion(Question question) {
 
-        //Show the question.
         questionView.setText(question.getQuestion());
 
         //Load all alternatives.
         ArrayList<String> displayArray = new ArrayList<String>();
         displayArray.add(question.getAnswer());
-        String[] alts = question.getAlternatives();
+        String[] alts = question.getAnswerAlternatives();
 
         for(int i = 0; i < 3; i++)
             displayArray.add(alts[i]);
@@ -153,13 +139,12 @@ public class QuestionActivity extends ActionBarActivity{
         }
     }
 
-    //Display a dialog asking if the user wants to exit. If yes, then navigate to the main menu.
+    //Ask the user if they want to exit the quiz and return to main menu if back button is pressed.
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setMessage("Do you want to exit the quiz?");
 
-        //If user selects "yes", then navigate to main activity.
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -167,7 +152,6 @@ public class QuestionActivity extends ActionBarActivity{
             }
         });
 
-        //If user select "No", then cancel the dialog.
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -176,7 +160,6 @@ public class QuestionActivity extends ActionBarActivity{
         });
         AlertDialog alert = builder.create();
 
-        //Show the dialog.
         alert.show();
     }
 }

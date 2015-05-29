@@ -24,24 +24,19 @@ import com.example.johan.uggletrasket.model.ItemList;
 import com.example.johan.uggletrasket.model.Quiz;
 import com.example.johan.uggletrasket.util.Database;
 
-/**
- * Created by JohanN on 09/05/15.
- */
-
 public class QuizListFragment extends DialogFragment{
 
-    //All inputs and buttons
-//    private QuizList quizzes;
     private ItemList<Quiz> quizzes;
     private ListView quizListView;
     private QuizListAdapter qla;
     private String quizId, quizName, quizPassword, userPassword;
     private ImageButton backButton;
-    private String choice ="";
 
-    // The quiz list fragment
-    public QuizListFragment(String s){
-        choice = s;
+    //help variable that decides where to direct the user after choosing a quiz
+    private String nextActivity = "";
+
+    public QuizListFragment(String next){
+        nextActivity = next;
     }
 
     @Override
@@ -50,11 +45,9 @@ public class QuizListFragment extends DialogFragment{
 
         View v = inflater.inflate(R.layout.fragment_quiz_list, container, false);
 
-        //Connect all inputs and buttons with the layout id
         quizListView = (ListView) v.findViewById(R.id.quiz_list_in_fragment);
         backButton = (ImageButton) v.findViewById(R.id.quiz_list_back_button);
 
-        //Close the fragment with the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,33 +56,29 @@ public class QuizListFragment extends DialogFragment{
         });
 
         //Fetches all quizzes from the database
-        //StrictMode.enableDefaults();
         this.quizzes = Database.getQuizList(getResources().getString(R.string.getAllQuizzes));
         populateQuizListView();
         getDialog().setTitle("Choose quiz:");
         return v;
     }
 
-    //Prints the list of quizzes
     private void populateQuizListView(){
         qla = new QuizListAdapter(getActivity());
 
         for(int i = 0; i < quizzes.getSize(); i++)
             qla.add(quizzes.getNext(Quiz.class));
 
+        //sets the adapter for all the list items
         if(quizListView != null){
             quizListView.setAdapter(qla);
         }
 
-        //Adds listener to every "quiz"
         quizListView.setOnItemClickListener(new QuizItemClickListener());
     }
 
-    //Kills the fragment
     private void killFragment() {
         getActivity().getFragmentManager().popBackStack();
     }
-
 
     private class QuizListAdapter extends ArrayAdapter<Quiz> {
         public QuizListAdapter(Context context)
@@ -104,9 +93,8 @@ public class QuizListFragment extends DialogFragment{
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.quiz_item, null);
             }
 
-            // Fetching the views of the layout
+            // Fetching the views of the list item layout
             TextView quizName = (TextView) convertView.findViewById(R.id.quiz_list_quiz_name);
-            //TextView noQuestions = (TextView) convertView.findViewById(R.id.quiz_list_no_questions);
 
             // Populate the data into the template layout (quiz_item)
             quizName.setHint(getItem(position).getName());
@@ -114,12 +102,11 @@ public class QuizListFragment extends DialogFragment{
         }
     }
 
-    //Decides what happens on click on meal items in the ListView
+    //Decides the actions taken when clicking on a list item
     private class QuizItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
 
-            //Selects a specific quiz and sets the id, name, password
             Quiz selectedQuiz = (Quiz) (quizListView.getItemAtPosition(position));
             quizId = selectedQuiz.getID();
             quizName = selectedQuiz.getName();
@@ -131,23 +118,23 @@ public class QuizListFragment extends DialogFragment{
 
             final EditText input = new EditText(getActivity());
 
-            //Hiddens the password while typing
+            //Hides the password while typing
             input.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
-            //Adds content to the pop-up window
             alert.setView(input);
             alert.setIcon(R.drawable.locked58);
             alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
 
                     //Checks if the password is correct and checks where the user should be directed
+                    //with help from the nextActivity string
                     userPassword = input.getText().toString();
                     if (isPasswordCorrect(userPassword, quizPassword)) {
-                        if (choice == "STAT") {
+                        if (nextActivity == "STAT") {
                             Intent i = new Intent(getActivity(), StatisticsActivity.class);
                             i.putExtra("quizId", quizId);
                             startActivity(i);
-                        }else if (choice == "EDIT") {
+                        }else if (nextActivity == "EDIT") {
                             Intent i = new Intent(getActivity().getApplicationContext(), AddQuestionActivity.class);
                             i.putExtra("quizId", quizId);
                             i.putExtra("quizName", quizName);
@@ -157,30 +144,17 @@ public class QuizListFragment extends DialogFragment{
                             Intent i = new Intent(getActivity(), QuestionActivity.class);
                             i.putExtra("quizId", quizId);
                             startActivity(i);
-
                         }
                         killFragment();
                     } else {
                         Toast.makeText(getActivity(), "Incorrect password!", Toast.LENGTH_SHORT).show();
                     }
-
-
                 }
             });
-
-            //Manage the cancel button
-            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Canceled.
-                }
-            });
-
-            //Makes the pop-up window visible
             alert.show();
         }
     }
 
-    //Checks if the given passsword is the same as the one in the database
     private boolean isPasswordCorrect(String userPassword, String quizPassword) {
         return userPassword.equals(quizPassword);
     }

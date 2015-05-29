@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -13,17 +12,13 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.johan.uggletrasket.model.Question;
-import com.example.johan.uggletrasket.model.QuestionList;
 import com.example.johan.uggletrasket.R;
+import com.example.johan.uggletrasket.model.ItemList;
+import com.example.johan.uggletrasket.model.Question;
 
-/**
- * Created by Johan on 2015-05-04.
- */
 public class QuizResultActivity extends ActionBarActivity {
 
-    //All inputs and buttons
-    private QuestionList questions;
+    private ItemList<Question> questions;
     private QuizListAdapter qla;
     private ListView questionList;
     private ImageButton mainMenuButton;
@@ -32,12 +27,10 @@ public class QuizResultActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz_result);
+        setContentView(R.layout.activity_item_list);
 
-        //Resets the result to zero
         int correctAnswers = 0, wrongAnswers = 0;
 
-        //Connect all inputs and buttons with the layout id
         result = (TextView) findViewById(R.id.result);
         questionList = (ListView) findViewById(R.id.question_list);
         mainMenuButton = (ImageButton) findViewById(R.id.main_menu_return);
@@ -56,7 +49,7 @@ public class QuizResultActivity extends ActionBarActivity {
         if (extras != null) {
             correctAnswers = extras.getInt("correct");
             wrongAnswers = extras.getInt("wrong");
-            questions = (QuestionList) extras.get("questions");
+            questions = (ItemList<Question>) extras.get("questions");
             questions.resetCursor();
         }
         result.setText("Result " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
@@ -69,22 +62,15 @@ public class QuizResultActivity extends ActionBarActivity {
         questionList = (ListView) findViewById(R.id.question_list);
         qla = new QuizListAdapter(this);
         for(int i = 0; i < questions.getSize(); i++)
-            qla.add(questions.getNext());
+            qla.add(questions.getNext(Question.class));
 
+        //sets the adapter for all the list items
         if(questionList != null){
             questionList.setAdapter(qla);
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    //An adapter class to assist the making of a list of Questions shown in activity_quiz_result
+    //An adapter class to assist the making of a list of Questions shown in activity_item_list
     //Takes a question_item layout and retrieves views from it. Then fills the views with
     //appropriate values from the Question object. The result corresponds to an item in the list
     private class QuizListAdapter extends ArrayAdapter<Question>
@@ -114,7 +100,6 @@ public class QuizResultActivity extends ActionBarActivity {
         }
     }
 
-    // Manage the android backward button
     public void onBackPressed() {
         startActivity(new Intent(QuizResultActivity.this, MainActivity.class));
     }

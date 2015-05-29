@@ -3,14 +3,12 @@ package com.example.johan.uggletrasket.layout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.example.johan.uggletrasket.util.Database;
 import com.example.johan.uggletrasket.R;
+import com.example.johan.uggletrasket.util.Database;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -19,29 +17,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Bangen on 15-05-09.
- */
 public class AddQuizActivity extends ActionBarActivity {
 
-    //Declaration of all inputs and buttons
     private EditText quizName, password;
-    private ImageButton create, cancel;
+    private ImageButton createButton, backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Connect activity with layout
         setContentView(R.layout.activity_add_quiz);
 
-        //Connect all inputs and buttons with respective layout id
         quizName = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
-        create = (ImageButton) findViewById(R.id.createButton);
-        cancel = (ImageButton) findViewById(R.id.cancelButton);
+        createButton = (ImageButton) findViewById(R.id.createButton);
+        backButton = (ImageButton) findViewById(R.id.cancelButton);
 
-        //Listener. Go back to the main activity if cancel button is clicked
+        //Listener. Go back to the main activity if backButton button is clicked
         View.OnClickListener cancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,68 +42,38 @@ public class AddQuizActivity extends ActionBarActivity {
             }
         };
 
-        //Add listener to cancel button
-        cancel.setOnClickListener(cancelListener);
+        backButton.setOnClickListener(cancelListener);
 
-        //Listener. Add quiz when create button is clicked. Then navigate to AddQuestion activity.
-        create.setOnClickListener(new View.OnClickListener() {
-
+        createButton.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
-            public void onClick(View arg0){
+            public void onClick(View arg0) {
 
                 //Convert entered information into strings.
                 String name = "" + quizName.getText().toString();
                 String passw = "" + password.getText().toString();
 
-                //Create quiz
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
-
-                //Saving the randomId for later use.
+                //Using nameValuePairs to collect input data entered by the user in order to submit it the the database
+                List<NameValuePair> nameValuePairs = new ArrayList<>(1);
                 String randomId = UUID.randomUUID().toString();
-
                 nameValuePairs.add(new BasicNameValuePair("Id", randomId));
                 nameValuePairs.add(new BasicNameValuePair("Name", name));
                 nameValuePairs.add(new BasicNameValuePair("Password", passw));
 
                 //Upload Quiz
-                Database.update(nameValuePairs, getResources().getString(R.string.addQuiz));
+                Database.addTableEntry(nameValuePairs, getResources().getString(R.string.addQuiz));
 
-                //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
+                //Enters AddQuestionActivity after a quiz is created
                 Intent intent = new Intent(AddQuizActivity.this, AddQuestionActivity.class);
                 intent.putExtra("quizId", randomId);
                 intent.putExtra("quizName", name);
                 startActivity(intent);
-                overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
+                overridePendingTransition(R.animator.push_up_in, R.animator.push_up_out);
             }
         });
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_add_question, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    //Navigate to the main menu when pressing the back button.
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
     }

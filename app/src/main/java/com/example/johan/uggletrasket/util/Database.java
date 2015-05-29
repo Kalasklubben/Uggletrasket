@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.example.johan.uggletrasket.model.ItemList;
 import com.example.johan.uggletrasket.model.Question;
-import com.example.johan.uggletrasket.model.QuestionList;
 import com.example.johan.uggletrasket.model.Quiz;
 
 import org.apache.http.HttpEntity;
@@ -30,11 +29,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Alexander on 2015-05-11.
+ * Database utility class for handling the connection to the Database used
+ * to recieve and upload various kinds of data
  */
 public class Database {
 
-    public static InputStream update(List<NameValuePair> nameValuePairs, String url){
+    /**
+     * Creates a new entry in a given table with provided data
+     *
+     * @param nameValuePairs  the user provided date to be inserted
+     * @param script  the address to a specified PHP file on the database
+     * @return the resulting input stream
+     */
+    public static InputStream addTableEntry(List<NameValuePair> nameValuePairs, String script){
 
         StrictMode.enableDefaults();
         InputStream is = null;
@@ -42,13 +49,9 @@ public class Database {
         //Communication with the database
         try {
             HttpClient httpClient = new DefaultHttpClient();
-
-            HttpPost httpPost = new HttpPost(url);
-
+            HttpPost httpPost = new HttpPost(script);
             httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
             HttpResponse response = httpClient.execute(httpPost);
-
             HttpEntity entity = response.getEntity();
 
             is = entity.getContent();
@@ -62,19 +65,25 @@ public class Database {
         return is;
     }
 
-    public static QuestionList getQuestionList(String script, String quizId){
+    /**
+     * Fetches a list of questions from the database
+     * @param script the address to a specified PHP file on the database
+     * @param quizId the unique id for the quiz containing the questions
+     * @return The questions
+     */
+    public static ItemList<Question> getQuestionList(String script, String quizId){
 
         String result = "";
         String url = script + "?QuizId=" + quizId;
 
         //Download from database
-        InputStream isr = Database.update(new ArrayList<NameValuePair>(1), url );
+        InputStream isr = Database.addTableEntry(new ArrayList<NameValuePair>(1), url);
 
-        //Convert response to string
+        //Convert responding data to string format
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
             }
@@ -85,11 +94,10 @@ public class Database {
             Log.e("log_tag", "Error  converting result " + e.toString());
         }
 
-        QuestionList loadedQuestions = new QuestionList();
+        ItemList<Question> loadedQuestions = new ItemList<>();
 
         //parse json data, and convert to question object
         try {
-            String s = "";
             JSONArray jArray = new JSONArray(result);
 
             for(int i=0; i<jArray.length();i++){
@@ -104,14 +112,14 @@ public class Database {
                 temp.setShowTimes(Integer.parseInt(json.getString("Showtimes")));
 
                 try {
-                    temp.addAlternative(json.getString("Wrong1"));
-                    temp.addAlternative(json.getString("Wrong2"));
-                    temp.addAlternative(json.getString("Wrong3"));
+                    temp.addAnswerAlternative(json.getString("Wrong1"));
+                    temp.addAnswerAlternative(json.getString("Wrong2"));
+                    temp.addAnswerAlternative(json.getString("Wrong3"));
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
 
-                loadedQuestions.addQuestion(temp);
+                loadedQuestions.addItem(temp);
 
             }
         } catch (Exception e) {
@@ -122,18 +130,23 @@ public class Database {
         return loadedQuestions;
     }
 
+    /**
+     * Fetches a list of quizzes from the database
+     * @param script the address to a specified PHP file on the database
+     * @return The quizzes
+     */
     public static ItemList<Quiz> getQuizList(String script){
 
         String result = "";
 
         //Download from database
-        InputStream isr = Database.update(new ArrayList<NameValuePair>(1),script);
+        InputStream isr = Database.addTableEntry(new ArrayList<NameValuePair>(1), script);
 
-        //Convert response from database to string
+        //Convert responding data from database to string format
         try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(isr,"iso-8859-1"),8);
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
             }
@@ -146,9 +159,8 @@ public class Database {
 
         ItemList<Quiz> loadedQuizzes = new ItemList();
 
-        //parse json data, and convert to question object
+        //parse json data, and convert to quiz object
         try {
-            String s = "";
             JSONArray jArray = new JSONArray(result);
 
             for(int i=0; i<jArray.length();i++){
@@ -170,6 +182,5 @@ public class Database {
         }
         return loadedQuizzes;
     }
-
 }
 
