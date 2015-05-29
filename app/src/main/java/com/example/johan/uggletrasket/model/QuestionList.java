@@ -1,8 +1,7 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Created by David on 01/05/2015.

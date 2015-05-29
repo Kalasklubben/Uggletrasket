@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/NoActionBarTheme" >
         <activity
-            android:name=".Start"
+            android:name=".layout.StartActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,30 +22,30 @@
         </activity>
 
         <activity
-            android:name=".QuestionActivity"
+            android:name=".layout.QuestionActivity"
             android:label="@string/app_name"
             android:noHistory="true"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".layout.MainActivity"
             android:label="@string/app_name"
             android:noHistory="true"/>
 
         <activity
-            android:name=".AddQuestion"
+            android:name=".layout.AddQuestionActivity"
             android:label="@string/title_activity_add_question"
             android:noHistory="true"/>
         <activity
-            android:name=".QuizResult"
+            android:name=".layout.QuizResultActivity"
             android:label="QuizResult"
             android:noHistory="true"/>
         <activity
-            android:name=".AddQuiz"
+            android:name=".layout.AddQuizActivity"
             android:label="AddQuiz"
             android:noHistory="true"/>
         
         <activity
-            android:name=".Statistics"
+            android:name=".layout.StatisticsActivity"
             android:label="@string/title_activity_statistics"
             android:noHistory="true">
         </activity>

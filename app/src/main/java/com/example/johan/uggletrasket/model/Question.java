@@ -1,4 +1,4 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.model;
 
 import java.io.Serializable;
 import java.util.UUID;

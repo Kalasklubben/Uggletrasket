@@ -1,4 +1,4 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.layout;
 
 import android.app.AlertDialog;
 import android.app.FragmentManager;
@@ -9,8 +9,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.johan.uggletrasket.R;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -52,7 +53,7 @@ public class MainActivity extends ActionBarActivity {
         View.OnClickListener listAddListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddQuiz.class));
+                startActivity(new Intent(MainActivity.this, AddQuizActivity.class));
                 overridePendingTransition(R.animator.push_left_in,R.animator.push_left_out);
             }
         };

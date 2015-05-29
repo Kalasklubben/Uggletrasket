@@ -1,4 +1,4 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.model;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -6,7 +6,6 @@ import java.util.UUID;
 //Class representing a question
 public class Quiz implements Serializable{
 
-    //All inputs
     private String ID;
     private String name;
     private String password;

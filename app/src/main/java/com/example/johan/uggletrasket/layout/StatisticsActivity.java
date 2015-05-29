@@ -1,14 +1,16 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.layout;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.example.johan.uggletrasket.util.Database;
+import com.example.johan.uggletrasket.model.Question;
+import com.example.johan.uggletrasket.model.QuestionList;
+import com.example.johan.uggletrasket.R;
 
 import java.text.DecimalFormat;
 
@@ -25,9 +27,6 @@ public class StatisticsActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-
-        //STRICT MODE ENABLED
-        /*StrictMode.enableDefaults();*/
 
         //Connect all inputs and buttons with the layout id
         resultView = (TextView) findViewById(R.id.result);

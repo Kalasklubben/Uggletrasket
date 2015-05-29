@@ -1,4 +1,4 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.layout;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -10,10 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.johan.uggletrasket.util.Database;
+import com.example.johan.uggletrasket.model.Question;
+import com.example.johan.uggletrasket.model.QuestionList;
+import com.example.johan.uggletrasket.R;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -81,7 +85,7 @@ public class QuestionActivity extends ActionBarActivity{
                 //If there are no more questions, sends data containing number of correct answers
                 //together with the questions themselves. Then navigate to the result activity.
                 if (questions.endOfList()) {
-                    Intent i = new Intent(QuestionActivity.this, QuizResult.class);
+                    Intent i = new Intent(QuestionActivity.this, QuizResultActivity.class);
                     i.putExtra("correct", correctAnswers);
                     i.putExtra("wrong", wrongAnswers);
                     i.putExtra("questions", questions);

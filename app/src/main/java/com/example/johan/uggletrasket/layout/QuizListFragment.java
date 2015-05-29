@@ -1,4 +1,4 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.layout;
 
 
 import android.app.AlertDialog;
@@ -7,19 +7,22 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.johan.uggletrasket.util.Database;
+import com.example.johan.uggletrasket.model.Quiz;
+import com.example.johan.uggletrasket.model.QuizList;
+import com.example.johan.uggletrasket.R;
 
 /**
  * Created by JohanN on 09/05/15.
@@ -140,11 +143,11 @@ public class QuizListFragment extends DialogFragment{
                     userPassword = input.getText().toString();
                     if (isPasswordCorrect(userPassword, quizPassword)) {
                         if (choice == "STAT") {
-                            Intent i = new Intent(getActivity(), Statistics.class);
+                            Intent i = new Intent(getActivity(), StatisticsActivity.class);
                             i.putExtra("quizId", quizId);
                             startActivity(i);
                         }else if (choice == "EDIT") {
-                            Intent i = new Intent(getActivity().getApplicationContext(), AddQuestion.class);
+                            Intent i = new Intent(getActivity().getApplicationContext(), AddQuestionActivity.class);
                             i.putExtra("quizId", quizId);
                             i.putExtra("quizName", quizName);
                             startActivity(i);

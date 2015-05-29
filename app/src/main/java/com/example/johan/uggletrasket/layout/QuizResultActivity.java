@@ -1,4 +1,4 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.layout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,13 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.johan.uggletrasket.model.Question;
+import com.example.johan.uggletrasket.model.QuestionList;
+import com.example.johan.uggletrasket.R;
 
 /**
  * Created by Johan on 2015-05-04.

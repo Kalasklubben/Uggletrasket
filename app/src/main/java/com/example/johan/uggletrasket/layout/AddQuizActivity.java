@@ -1,29 +1,20 @@
-package com.example.johan.uggletrasket;
+package com.example.johan.uggletrasket.layout;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
+import com.example.johan.uggletrasket.util.Database;
+import com.example.johan.uggletrasket.R;
+
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -40,10 +31,6 @@ public class AddQuizActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        //StrictMode.setThreadPolicy(policy);
 
         //Connect activity with layout
         setContentView(R.layout.activity_add_quiz);
@@ -89,7 +76,7 @@ public class AddQuizActivity extends ActionBarActivity {
                 nameValuePairs.add(new BasicNameValuePair("Password", passw));
 
                 //Upload Quiz
-                Database.update(nameValuePairs,getResources().getString(R.string.addQuiz));
+                Database.update(nameValuePairs, getResources().getString(R.string.addQuiz));
 
                 //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
                 Intent intent = new Intent(AddQuizActivity.this, AddQuestionActivity.class);
