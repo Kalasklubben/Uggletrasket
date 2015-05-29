@@ -102,7 +102,7 @@ public class QuestionActivity extends ActionBarActivity{
         List<NameValuePair> nameValuePairs = new ArrayList<>(1);
         nameValuePairs.add(new BasicNameValuePair("Id", Id));
         nameValuePairs.add(new BasicNameValuePair("Showtimes", showtime));
-        Database.addTableEntry(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateShow.php");
+        Database.addTableEntry(nameValuePairs, getResources().getString(R.string.updateShow));
     }
 
     //Updates the number of times a question has been answered correctly.
@@ -113,7 +113,7 @@ public class QuestionActivity extends ActionBarActivity{
         List<NameValuePair> nameValuePairs = new ArrayList<>(1);
         nameValuePairs.add(new BasicNameValuePair("Id", Id));
         nameValuePairs.add(new BasicNameValuePair("NoCorrectAnswer", NoCorrectAnswer));
-        Database.addTableEntry(nameValuePairs, "http://www.ilmkandidat.byethost7.com/updateNoCorrectAnswer.php");
+        Database.addTableEntry(nameValuePairs, getResources().getString(R.string.updateNoCorrectAnswer));
     }
 
     private void displayQuestion(Question question) {
@@ -121,7 +121,7 @@ public class QuestionActivity extends ActionBarActivity{
         questionView.setText(question.getQuestion());
 
         //Load all alternatives.
-        ArrayList<String> displayArray = new ArrayList<String>();
+        ArrayList<String> displayArray = new ArrayList<>();
         displayArray.add(question.getAnswer());
         String[] alts = question.getAnswerAlternatives();
 
