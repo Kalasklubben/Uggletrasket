@@ -17,7 +17,7 @@ import android.widget.TextView;
 /**
  * Created by Johan on 2015-05-04.
  */
-public class QuizResult extends ActionBarActivity {
+public class QuizResultActivity extends ActionBarActivity {
 
     //All inputs and buttons
     private QuestionList questions;
@@ -43,7 +43,7 @@ public class QuizResult extends ActionBarActivity {
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(QuizResult.this, MainActivity.class));
+                startActivity(new Intent(QuizResultActivity.this, MainActivity.class));
                 overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         });
@@ -113,6 +113,6 @@ public class QuizResult extends ActionBarActivity {
 
     // Manage the android backward button
     public void onBackPressed() {
-        startActivity(new Intent(QuizResult.this, MainActivity.class));
+        startActivity(new Intent(QuizResultActivity.this, MainActivity.class));
     }
 }

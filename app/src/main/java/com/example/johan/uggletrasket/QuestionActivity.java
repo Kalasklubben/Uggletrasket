@@ -56,7 +56,7 @@ public class QuestionActivity extends ActionBarActivity{
         }
 
         //Get the list of questions.
-        this.questions = LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizId);
+        this.questions = Database.getQuestionList(getResources().getString(R.string.getQuizQuestions), quizId);
 
         //Listeners for buttons.
         final String finalQuizId = quizId;
