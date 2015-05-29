@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-public class AddQuestion extends ActionBarActivity {
+public class AddQuestionActivity extends ActionBarActivity {
 
     //Declaration of all inputs and buttons
     private EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
@@ -56,7 +56,7 @@ public class AddQuestion extends ActionBarActivity {
         View.OnClickListener backList = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddQuestion.this, MainActivity.class));
+                startActivity(new Intent(AddQuestionActivity.this, MainActivity.class));
                 overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
@@ -96,7 +96,7 @@ public class AddQuestion extends ActionBarActivity {
             Database.update(nameValuePairs, getResources().getString(R.string.addQuestion));
 
             //Go to new "addQuestion" screen, every new question will need the quiz information.
-            Intent intent = new Intent(AddQuestion.this, AddQuestion.class);
+            Intent intent = new Intent(AddQuestionActivity.this, AddQuestionActivity.class);
             intent.putExtra("quizId", quizInfo.getString("quizId"));
             intent.putExtra("quizName", quizInfo.getString("quizName"));
             startActivity(intent);

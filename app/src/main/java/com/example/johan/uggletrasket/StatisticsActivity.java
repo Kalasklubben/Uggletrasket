@@ -13,16 +13,15 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 
 
-public class Statistics extends Activity {
+public class StatisticsActivity extends Activity {
     /** Called when the activity is first created. */
 
     private TextView resultView;
-
     private ImageButton returnButton;
     private String quizID = "";
     private QuestionList ql;
             
-;    @Override
+;   @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
@@ -41,7 +40,7 @@ public class Statistics extends Activity {
         }
 
         //Download questions from database
-        ql =  LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizID);
+        ql =  Database.getQuestionList(getResources().getString(R.string.getQuizQuestions), quizID);
 
         //Prints the result
         printResult();
@@ -50,7 +49,7 @@ public class Statistics extends Activity {
         View.OnClickListener listAdd = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Statistics.this, MainActivity.class));
+                startActivity(new Intent(StatisticsActivity.this, MainActivity.class));
                 overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };

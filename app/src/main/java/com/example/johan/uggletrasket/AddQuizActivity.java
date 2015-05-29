@@ -31,7 +31,7 @@ import java.util.UUID;
 /**
  * Created by Bangen on 15-05-09.
  */
-public class AddQuiz extends ActionBarActivity {
+public class AddQuizActivity extends ActionBarActivity {
 
     //Declaration of all inputs and buttons
     private EditText quizName, password;
@@ -58,7 +58,7 @@ public class AddQuiz extends ActionBarActivity {
         View.OnClickListener cancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddQuiz.this, MainActivity.class));
+                startActivity(new Intent(AddQuizActivity.this, MainActivity.class));
                 overridePendingTransition(R.animator.push_right_in,R.animator.push_right_out);
             }
         };
@@ -92,7 +92,7 @@ public class AddQuiz extends ActionBarActivity {
                 Database.update(nameValuePairs,getResources().getString(R.string.addQuiz));
 
                 //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
-                Intent intent = new Intent(AddQuiz.this, AddQuestion.class);
+                Intent intent = new Intent(AddQuizActivity.this, AddQuestionActivity.class);
                 intent.putExtra("quizId", randomId);
                 intent.putExtra("quizName", name);
                 startActivity(intent);

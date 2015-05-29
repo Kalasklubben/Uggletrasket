@@ -60,7 +60,7 @@ public class QuizListFragment extends DialogFragment{
 
         //Fetches all quizzes from the database
         //StrictMode.enableDefaults();
-        this.quizzes = LoadQuizzes.getData(getResources().getString(R.string.getAllQuizzes));
+        this.quizzes = Database.getQuizList(getResources().getString(R.string.getAllQuizzes));
         populateQuizListView();
         getDialog().setTitle("Choose quiz:");
         return v;
