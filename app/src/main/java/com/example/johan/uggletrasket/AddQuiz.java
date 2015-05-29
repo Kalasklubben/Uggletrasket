@@ -33,25 +33,28 @@ import java.util.UUID;
  */
 public class AddQuiz extends ActionBarActivity {
 
-    EditText quizName, password;
-    ImageButton create, cancel;
+    //Declaration of all inputs and buttons
+    private EditText quizName, password;
+    private ImageButton create, cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Not sure about what it does, but it's needed.
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
+
+        //Connect activity with layout
         setContentView(R.layout.activity_add_quiz);
 
+        //Connect all inputs and buttons with respective layout id
         quizName = (EditText) findViewById(R.id.name);
         password = (EditText) findViewById(R.id.password);
         create = (ImageButton) findViewById(R.id.createButton);
         cancel = (ImageButton) findViewById(R.id.cancelButton);
 
-        //Go back to the main screen if cancel button is clicked.
+        //Listener. Go back to the main activity if cancel button is clicked
         View.OnClickListener cancelListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,12 +63,13 @@ public class AddQuiz extends ActionBarActivity {
             }
         };
 
+        //Add listener to cancel button
         cancel.setOnClickListener(cancelListener);
 
-        //Add quiz when create button is clicked.
+        //Listener. Add quiz when create button is clicked. Then navigate to AddQuestion activity.
         create.setOnClickListener(new View.OnClickListener() {
 
-            InputStream is = null;
+
 
             @Override
             public void onClick(View arg0){
@@ -74,46 +78,26 @@ public class AddQuiz extends ActionBarActivity {
                 String name = "" + quizName.getText().toString();
                 String passw = "" + password.getText().toString();
 
+                //Create quiz
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 
                 //Saving the randomId for later use.
                 String randomId = UUID.randomUUID().toString();
 
-                //Adding information into database format using the nameValuePairs list.
                 nameValuePairs.add(new BasicNameValuePair("Id", randomId));
                 nameValuePairs.add(new BasicNameValuePair("Name", name));
                 nameValuePairs.add(new BasicNameValuePair("Password", passw));
 
-                //Time to upload to database.
-                try {
-                    HttpClient httpClient = new DefaultHttpClient();
+                //Upload Quiz
+                Database.update(nameValuePairs,getResources().getString(R.string.addQuiz));
 
-                    HttpPost httpPost = new HttpPost(getResources().getString(R.string.addQuiz));
-
-                    httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                    HttpResponse response = httpClient.execute(httpPost);
-
-                    HttpEntity entity = response.getEntity();
-
-                    is = entity.getContent();
-
-                    //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
-                    Intent intent = new Intent(AddQuiz.this, AddQuestion.class);
-                    intent.putExtra("quizId", randomId);
-                    intent.putExtra("quizName", name);
-                    startActivity(intent);
-                    overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
-
-                } catch (ClientProtocolException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                //After a new quiz is created, go to AddQuestions. Added questions will need the quizId.
+                Intent intent = new Intent(AddQuiz.this, AddQuestion.class);
+                intent.putExtra("quizId", randomId);
+                intent.putExtra("quizName", name);
+                startActivity(intent);
+                overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
             }
-
         });
 
     }
@@ -139,6 +123,8 @@ public class AddQuiz extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //Navigate to the main menu when pressing the back button.
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
     }

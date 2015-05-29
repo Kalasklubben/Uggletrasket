@@ -30,25 +30,29 @@ import java.util.UUID;
 
 public class AddQuestion extends ActionBarActivity {
 
-    EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
-    ImageButton bSubmit, bBack;
-    int noQuestions;
+    //Declaration of all inputs and buttons
+    private EditText editQuestion, editCorrect, editWrong1, editWrong2, editWrong3;
+    private ImageButton bSubmit, bBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
+        //StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        //StrictMode.setThreadPolicy(policy);
+
+        //Connect activity with layout
         setContentView(R.layout.activity_add_question);
 
+        //Connect all inputs and buttons with respective layout id
         editQuestion = (EditText) findViewById(R.id.question);
         editCorrect = (EditText) findViewById(R.id.correct);
         editWrong1 = (EditText) findViewById(R.id.wrong1);
         editWrong2 = (EditText) findViewById(R.id.wrong2);
         editWrong3 = (EditText) findViewById(R.id.wrong3);
-
         bSubmit = (ImageButton) findViewById(R.id.createButton);
         bBack = (ImageButton) findViewById(R.id.cancelButton);
 
+        //Listener for back button. Go back to the main activity if back button is clicked
         View.OnClickListener backList = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,81 +61,51 @@ public class AddQuestion extends ActionBarActivity {
             }
         };
 
+        //Add listener to back button
         bBack.setOnClickListener(backList);
-        bSubmit.setOnClickListener(new View.OnClickListener() {
 
-            InputStream is = null;
+        //Listener for submit button. Update database.
+        bSubmit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0){
-                    String Question = "" + editQuestion.getText().toString();
-                    String Correct = "" + editCorrect.getText().toString();
-                    String Wrong1 = "" + editWrong1.getText().toString();
-                    String Wrong2 = "" + editWrong2.getText().toString();
-                    String Wrong3 = "" + editWrong3.getText().toString();
+            String Question = "" + editQuestion.getText().toString();
+            String Correct = "" + editCorrect.getText().toString();
+            String Wrong1 = "" + editWrong1.getText().toString();
+            String Wrong2 = "" + editWrong2.getText().toString();
+            String Wrong3 = "" + editWrong3.getText().toString();
 
-                    //Get quizInfo from AddQuiz
-                    String quizName = null;
-                    String quizId = null;
-                    Bundle quizInfo = getIntent().getExtras();
-                    if(quizInfo != null) {
-                        quizName = quizInfo.getString("quizName");
-                        quizId = quizInfo.getString("quizId");
-                    }
+            //Get quizInfo from AddQuiz
+            Bundle quizInfo = getIntent().getExtras();
 
+            //Create question
+            List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
 
-                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+            nameValuePairs.add(new BasicNameValuePair("Id", UUID.randomUUID().toString()));
+            nameValuePairs.add(new BasicNameValuePair("Question", Question));
+            nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
+            nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
+            nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
+            nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
+            nameValuePairs.add(new BasicNameValuePair("QuizId", quizInfo.getString("quizId")));
+            nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
+            nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
+            nameValuePairs.add(new BasicNameValuePair("QuizId", quizInfo.getString("quizId")));
 
-                    nameValuePairs.add(new BasicNameValuePair("Id", UUID.randomUUID().toString()));
-                    nameValuePairs.add(new BasicNameValuePair("Question", Question));
-                    nameValuePairs.add(new BasicNameValuePair("Correct", Correct));
-                    nameValuePairs.add(new BasicNameValuePair("Wrong1", Wrong1));
-                    nameValuePairs.add(new BasicNameValuePair("Wrong2", Wrong2));
-                    nameValuePairs.add(new BasicNameValuePair("Wrong3", Wrong3));
-                    nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
-                    nameValuePairs.add(new BasicNameValuePair("Showtime", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("NoCurrentAnswer", "0"));
-                    nameValuePairs.add(new BasicNameValuePair("QuizId", quizId));
+            //Upload question
+            Database.update(nameValuePairs, getResources().getString(R.string.addQuestion));
 
-                    try {
-                        HttpClient httpClient = new DefaultHttpClient();
-                        HttpPost httpPost = new HttpPost(getResources().getString(R.string.addQuestion));
-                        httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-                        HttpResponse response = httpClient.execute(httpPost);
-                        HttpEntity entity = response.getEntity();
-
-                        /*
-                        is = entity.getContent();
-                        noQuestions++;
-                        String msg = noQuestions + " question(s) added to " + quizName;
-                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
-                        */
-
-                        Intent intent = new Intent(AddQuestion.this, AddQuestion.class);
-                        intent.putExtra("quizId", quizInfo.getString("quizId"));
-                        intent.putExtra("quizName", quizInfo.getString("quizName"));
-                        startActivity(intent);
-                        overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
-
-                    } catch (ClientProtocolException e) {
-                        e.printStackTrace();
-                    } catch (UnsupportedEncodingException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+            //Go to new "addQuestion" screen, every new question will need the quiz information.
+            Intent intent = new Intent(AddQuestion.this, AddQuestion.class);
+            intent.putExtra("quizId", quizInfo.getString("quizId"));
+            intent.putExtra("quizName", quizInfo.getString("quizName"));
+            startActivity(intent);
+            overridePendingTransition(R.animator.push_up_in,R.animator.push_up_out);
+            }
         });
     }
 
-    private void clearDisplay() {
-        editQuestion.setText("");
-        editCorrect.setText("");
-        editWrong1.setText("");
-        editWrong2.setText("");
-        editWrong3.setText("");
-    }
-
+    //Navigate to the main menu when pressing the back button.
     public void onBackPressed() {
         startActivity(new Intent(this, MainActivity.class));
     }

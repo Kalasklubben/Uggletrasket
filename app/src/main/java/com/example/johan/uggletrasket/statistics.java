@@ -16,21 +16,22 @@ import java.text.DecimalFormat;
 public class Statistics extends Activity {
     /** Called when the activity is first created. */
 
-    TextView resultView;
-    TextView header;
+    private TextView resultView;
+
     private ImageButton returnButton;
-    ScrollView mScrollView;
-    String quizID = "";
-    QuestionList ql;
+    private String quizID = "";
+    private QuestionList ql;
             
 ;    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
-        StrictMode.enableDefaults(); //STRICT MODE ENABLED
 
+        //STRICT MODE ENABLED
+        /*StrictMode.enableDefaults();*/
+
+        //Connect all inputs and buttons with the layout id
         resultView = (TextView) findViewById(R.id.result);
-        header = (TextView) findViewById(R.id.header);
         returnButton = (ImageButton) findViewById(R.id.return_stats_button);
 
         //Get quizID
@@ -38,10 +39,14 @@ public class Statistics extends Activity {
         if(quizInfo != null) {
             quizID = quizInfo.getString("quizId");
         }
-        
+
+        //Download questions from database
         ql =  LoadQuestions.getData(getResources().getString(R.string.getQuizQuestions), quizID);
+
+        //Prints the result
         printResult();
 
+        //Listener for the return button
         View.OnClickListener listAdd = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,25 +56,29 @@ public class Statistics extends Activity {
         };
 
         returnButton.setOnClickListener(listAdd);
-        
     }
 
+    //Prints the result
     private void printResult() {
-        //String output = "The result of choosen quiz:\n";
+
         String output = "";
+
+        //Iterates through the list of questions
         while(!ql.endOfList()){
             Question temp = ql.getNext();
+
+            //Calculates the percentage of correct answers
             double perc;
             if (temp.getShowTimes() < 1) {
                 perc = 0;
             }else{
                 perc = (double)temp.getNoCorrectAnswers()/(double)temp.getShowTimes();
             }
-
             perc = perc*100;
             DecimalFormat df = new DecimalFormat("0.00");
+
+            //The printed string
             output = (output + "\nQuestion: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n");
-            //output = "Question: " + temp.getQuestion() + "\nAnswer: " + temp.getAnswer() +  "\nResult: " + df.format(perc) + "%\n";
         }
         resultView.setText(output);
     }

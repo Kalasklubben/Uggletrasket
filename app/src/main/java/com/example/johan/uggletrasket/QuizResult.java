@@ -19,22 +19,27 @@ import android.widget.TextView;
  */
 public class QuizResult extends ActionBarActivity {
 
-    QuestionList questions;
-    QuizListAdapter qla;
-    ListView questionList;
-    ImageButton mainMenuButton;
+    //All inputs and buttons
+    private QuestionList questions;
+    private QuizListAdapter qla;
+    private ListView questionList;
+    private ImageButton mainMenuButton;
+    private TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_result);
 
+        //Resets the result to zero
         int correctAnswers = 0, wrongAnswers = 0;
 
-        TextView result = (TextView) findViewById(R.id.result);
+        //Connect all inputs and buttons with the layout id
+        result = (TextView) findViewById(R.id.result);
         questionList = (ListView) findViewById(R.id.question_list);
         mainMenuButton = (ImageButton) findViewById(R.id.main_menu_return);
-        
+
+        //Listener for the main menu button
         mainMenuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +48,7 @@ public class QuizResult extends ActionBarActivity {
             }
         });
 
-        //retrieves info from another activity (QuestionActivity)
+        //Retrieves result from another activity (QuestionActivity)
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             correctAnswers = extras.getInt("correct");
@@ -51,7 +56,6 @@ public class QuizResult extends ActionBarActivity {
             questions = (QuestionList) extras.get("questions");
             questions.resetCursor();
         }
-
         result.setText("Result " + correctAnswers + "/" + (wrongAnswers + correctAnswers));
         populateQuestionListView();
         }
@@ -61,7 +65,6 @@ public class QuizResult extends ActionBarActivity {
     private void populateQuestionListView(){
         questionList = (ListView) findViewById(R.id.question_list);
         qla = new QuizListAdapter(this);
-
         for(int i = 0; i < questions.getSize(); i++)
             qla.add(questions.getNext());
 
@@ -69,6 +72,7 @@ public class QuizResult extends ActionBarActivity {
             questionList.setAdapter(qla);
         }
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -86,7 +90,6 @@ public class QuizResult extends ActionBarActivity {
         {
             super(context,0);
         }
-
         public View getView(int position, View convertView, ViewGroup parent)
         {
             if (convertView == null)
@@ -108,6 +111,7 @@ public class QuizResult extends ActionBarActivity {
         }
     }
 
+    // Manage the android backward button
     public void onBackPressed() {
         startActivity(new Intent(QuizResult.this, MainActivity.class));
     }
