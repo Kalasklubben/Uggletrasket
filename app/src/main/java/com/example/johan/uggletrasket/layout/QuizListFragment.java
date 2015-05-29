@@ -19,10 +19,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.johan.uggletrasket.util.Database;
-import com.example.johan.uggletrasket.model.Quiz;
-import com.example.johan.uggletrasket.model.QuizList;
 import com.example.johan.uggletrasket.R;
+import com.example.johan.uggletrasket.model.ItemList;
+import com.example.johan.uggletrasket.model.Quiz;
+import com.example.johan.uggletrasket.util.Database;
 
 /**
  * Created by JohanN on 09/05/15.
@@ -31,7 +31,8 @@ import com.example.johan.uggletrasket.R;
 public class QuizListFragment extends DialogFragment{
 
     //All inputs and buttons
-    private QuizList quizzes;
+//    private QuizList quizzes;
+    private ItemList<Quiz> quizzes;
     private ListView quizListView;
     private QuizListAdapter qla;
     private String quizId, quizName, quizPassword, userPassword;
@@ -74,7 +75,7 @@ public class QuizListFragment extends DialogFragment{
         qla = new QuizListAdapter(getActivity());
 
         for(int i = 0; i < quizzes.getSize(); i++)
-            qla.add(quizzes.getNext());
+            qla.add(quizzes.getNext(Quiz.class));
 
         if(quizListView != null){
             quizListView.setAdapter(qla);

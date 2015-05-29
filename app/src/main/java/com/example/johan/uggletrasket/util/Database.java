@@ -5,10 +5,10 @@ package com.example.johan.uggletrasket.util;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.example.johan.uggletrasket.model.ItemList;
 import com.example.johan.uggletrasket.model.Question;
 import com.example.johan.uggletrasket.model.QuestionList;
 import com.example.johan.uggletrasket.model.Quiz;
-import com.example.johan.uggletrasket.model.QuizList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -122,7 +122,7 @@ public class Database {
         return loadedQuestions;
     }
 
-    public static QuizList getQuizList(String script){
+    public static ItemList<Quiz> getQuizList(String script){
 
         String result = "";
 
@@ -144,7 +144,7 @@ public class Database {
             Log.e("log_tag", "Error  converting result "+e.toString());
         }
 
-        QuizList loadedQuizzes = new QuizList();
+        ItemList<Quiz> loadedQuizzes = new ItemList();
 
         //parse json data, and convert to question object
         try {
@@ -162,7 +162,7 @@ public class Database {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
-                loadedQuizzes.addQuiz(temp);
+                loadedQuizzes.addItem(temp);
             }
         } catch (Exception e) {
             // TODO: handle exception

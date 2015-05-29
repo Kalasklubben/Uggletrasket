@@ -1,44 +1,55 @@
 package com.example.johan.uggletrasket.model;
 
+/**
+ * Created by JohanN on 29/05/15.
+ */
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by David on 01/05/2015.
  */
-public class QuestionList implements Serializable{
+public class ItemList<T> implements Serializable {
 
     //All inputs
-    private ArrayList<Question> allQuestions;
+    private ArrayList<T> allItems;
     private int cursor;
-    private int noQuestions;
+    private int noItems;
 
     //Constructor
-    public QuestionList(){
-        allQuestions = new ArrayList<>();
+    public ItemList(){
+        allItems = new ArrayList<>();
         cursor = 0;
-        noQuestions = 0;
+        noItems = 0;
     }
 
     //Adds a question to the question list
-    public void addQuestion(Question q){
-        allQuestions.add(q);
-        noQuestions++;
+    public void addItem(T item){
+        allItems.add(item);
+        noItems++;
     }
 
     //Returns the next question in the list, depending on the position of the cursor
-    public Question getNext(){
-        Question temp = new Question();
-        if(cursor < noQuestions){
-            temp = allQuestions.get(cursor);
+    public T getNext(Class<T> itemClass){
+        T temp = null;
+        try {
+            temp = itemClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        if(cursor < noItems){
+            temp = allItems.get(cursor);
             cursor++;
         }
         return temp;
     }
 
     //Returns the current  question in the list, depending on the position of the cursor
-    public Question getCurrentQuestion(){
-        return allQuestions.get(cursor-1);
+    public T getCurrentItem(){
+        return allItems.get(cursor-1);
     }
 
     //Resets the position of the cursor
@@ -53,29 +64,29 @@ public class QuestionList implements Serializable{
 
     //Returns the number of questions in a question list
     public int getSize(){
-        return noQuestions;
+        return noItems;
     }
 
     //Removes all questions from a quiz list
-    public void removeAllQuestion(){
-        allQuestions.removeAll(allQuestions);
-        noQuestions = 0;
+    public void removeAllItems(){
+        allItems.removeAll(allItems);
+        noItems = 0;
     }
 
     //Removes a question from a list
-    public void removeQuestion(Question q){
-        allQuestions.remove(q);
+    public void removeItem(T q){
+        allItems.remove(q);
         if(cursor == getSize())
             cursor--;
     }
 
     //Returns the list of the questions
-    public ArrayList<Question> getQuestions() {
-        return allQuestions;
+    public ArrayList<T> getItems() {
+        return allItems;
     }
 
     //Indicates if the cursor is at the end of the list
     public boolean endOfList(){
-        return cursor >= noQuestions;
+        return cursor >= noItems;
     }
 }
