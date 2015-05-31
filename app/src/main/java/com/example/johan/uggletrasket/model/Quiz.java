@@ -3,6 +3,10 @@ package com.example.johan.uggletrasket.model;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * Represents a unique quiz within the app
+ */
+
 public class Quiz implements Serializable{
 
     //a unique randomly generated ID used for identifying the questions

@@ -16,6 +16,7 @@ import com.example.johan.uggletrasket.R;
 import com.example.johan.uggletrasket.model.ItemList;
 import com.example.johan.uggletrasket.model.Question;
 
+
 public class QuizResultActivity extends ActionBarActivity {
 
     private ItemList<Question> questions;
