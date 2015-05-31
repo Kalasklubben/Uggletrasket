@@ -1,9 +1,9 @@
 package com.example.johan.uggletrasket.layout;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,7 @@ import com.example.johan.uggletrasket.util.Database;
 
 import java.text.DecimalFormat;
 
-public class StatisticsActivity extends Activity {
+public class StatisticsActivity extends ActionBarActivity {
 
     private ImageButton returnButton;
     private String quizID = "";

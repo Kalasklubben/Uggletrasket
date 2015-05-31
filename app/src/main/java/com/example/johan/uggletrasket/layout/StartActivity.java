@@ -8,6 +8,9 @@ import android.os.Handler;
 
 import com.example.johan.uggletrasket.R;
 
+/**
+ * Manages the layout that handles the application splash screen
+ */
 public class StartActivity extends ActionBarActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
